@@ -13,6 +13,7 @@ use App\Repositories\Country\CountryRepository;
 use App\Repositories\Role\RoleRepository;
 use App\Repositories\User\UserRepository;
 use App\Support\Enum\UserStatus;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -72,6 +73,8 @@ class UsersController extends Controller
         if (! data_get($data, 'username')) {
             $data['username'] = null;
         }
+
+        $data['created_by'] = Auth::id();
 
         $this->users->create($data);
 
