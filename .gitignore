@@ -19,3 +19,9 @@ yarn-error.log
 .env.backup
 .env.production
 auth.json
+.env
+docker-compose.yml
+docker
+public
+vendor
+storage
