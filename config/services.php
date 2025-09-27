@@ -78,4 +78,8 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+
+    'yahoo' => [
+        'app_id' => env('YAHOO_APP_ID'),
+    ],
 ];

@@ -45,6 +45,8 @@ return [
         'owner_name_required' => '所有者名は必須です',
         'tel_required' => '電話番号は必須です',
         'post_code_required' => '郵便番号は必須です',
+        'post_code_size' => '郵便番号は:size桁でなければなりません',
+        'post_code_regex' => '郵便番号は数字のみを含む必要があります',
         'state_required' => '都道府県は必須です',
         'city_required' => '市区町村は必須です',
         'ward_required' => '区は必須です',

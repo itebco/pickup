@@ -73,24 +73,25 @@
                                 <td>{{ $address->post_code }}</td>
                                 <td>{{ $address->state }} {{ $address->city }} {{ $address->ward }} {{ $address->room_no }}</td>
                                 <td>{{ $address->translated_type }}</td>
-                                <td class="text-center">
-                                    {{-- <a href="{{ route('addresses.show', $address->id) }}" class="btn btn-info btn-sm">
-                                        @lang('app.view')
-                                    </a> --}}
-                                    <a href="{{ route('addresses.edit', $address->id) }}" class="btn btn-primary btn-sm">
-                                        @lang('app.edit')
+                                <td class="text-center align-middle">
+                                    <a href="{{ route('addresses.edit', $address->id) }}"
+                                       class="btn btn-icon edit"
+                                       title="@lang('app.edit')"
+                                       data-toggle="tooltip" data-placement="top">
+                                        <i class="fas fa-edit"></i>
                                     </a>
-                                    <button href="{{ route('addresses.destroy', $address->id) }}"
-                                           class="btn btn-danger btn-sm"
-                                           title="@lang('address.delete_address')"
-                                           data-toggle="tooltip"
-                                           data-placement="top"
-                                           data-method="DELETE"
-                                           data-confirm-title="@lang('app.please_confirm')"
-                                           data-confirm-text="@lang('app.are_you_sure')"
-                                           data-confirm-delete="@lang('app.yes_delete_it')">
-                                        @lang('app.delete')
-                                    </button>
+
+                                    <a href="{{ route('addresses.destroy', $address->id) }}"
+                                       class="btn btn-icon"
+                                       title="@lang('app.delete')"
+                                       data-toggle="tooltip"
+                                       data-placement="top"
+                                       data-method="DELETE"
+                                       data-confirm-title="@lang('app.please_confirm')"
+                                       data-confirm-text="@lang('app.are_you_sure')"
+                                       data-confirm-delete="@lang('app.yes_delete_it')">
+                                       <i class="fas fa-trash"></i>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach

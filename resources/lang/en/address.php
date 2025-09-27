@@ -38,6 +38,8 @@ return [
         'owner_name_required' => 'Owner name is required',
         'tel_required' => 'Phone number is required',
         'post_code_required' => 'Postal code is required',
+        'post_code_size' => 'Postal code must be :size digits',
+        'post_code_regex' => 'Postal code must contain only numbers',
         'state_required' => 'State is required',
         'city_required' => 'City is required',
         'ward_required' => 'Ward is required',

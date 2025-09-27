@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\Users\AvatarController as UsersAvatarController;
 use App\Http\Controllers\Api\Users\SessionsController as UsersSessionsController;
 use App\Http\Controllers\Api\Users\TwoFactorController as UsersTwoFactorController;
 use App\Http\Controllers\Api\Users\UsersController;
+use App\Http\Controllers\Web\AddressController;
 
 Route::post('login', [AuthController::class, 'token']);
 Route::post('login/social', [SocialLoginController::class, 'index']);
@@ -85,4 +86,7 @@ Route::group(['middleware' => ['auth', 'verified', 'approved']], function () {
     Route::get('/settings', [SettingsController::class, 'index']);
 
     Route::get('/countries', [CountriesController::class, 'index']);
+    Route::get('addresses/search-by-postal-code', [AddressController::class, 'searchByPostalCode'])
+        ->name('addresses.search_by_postal_code')
+        ->middleware('permission:addresses.manage');
 });

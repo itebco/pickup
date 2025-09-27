@@ -45,6 +45,8 @@ return [
         'owner_name_required' => 'Tên chủ sở hữu là bắt buộc',
         'tel_required' => 'Số điện thoại là bắt buộc',
         'post_code_required' => 'Mã bưu điện là bắt buộc',
+        'post_code_size' => 'Mã bưu điện phải có :size chữ số',
+        'post_code_regex' => 'Mã bưu điện chỉ được chứa số',
         'state_required' => 'Tỉnh/Thành phố là bắt buộc',
         'city_required' => 'Quận/Huyện là bắt buộc',
         'ward_required' => 'Phường/Xã là bắt buộc',

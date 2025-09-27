@@ -52,8 +52,8 @@
 
                         <div class="form-group">
                             <label for="post_code">@lang('address.labels.post_code')</label>
-                            <input type="text" name="post_code" value="{{ old('post_code') }}" id="post_code"
-                                   class="form-control" required>
+                            <input type="number" name="post_code" value="{{ old('post_code') }}" id="post_code"
+                                   class="form-control" required maxlength="7">
                         </div>
 
                         <div class="form-group">
@@ -113,4 +113,66 @@
 @section('scripts')
     <script src="{{ asset('assets/js/as/btn.js') }}"></script>
     {!! JsValidator::formRequest('App\Http\Requests\Address\CreateAddressRequest', '#address-form') !!}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const postCodeInput = document.getElementById('post_code');
+            const stateInput = document.getElementById('state');
+            const cityInput = document.getElementById('city');
+            const wardInput = document.getElementById('ward');
+
+            // Store original disabled state
+            const originalStateDisabled = stateInput.disabled;
+            const originalCityDisabled = cityInput.disabled;
+            const originalWardDisabled = wardInput.disabled;
+
+            postCodeInput.addEventListener('input', function() {
+                if (postCodeInput.value.length === 7 && /^\d+$/.test(postCodeInput.value)) {
+                    // Call the postal code search API
+                    fetch('{{ route('api.addresses.search_by_postal_code') }}?postal_code=' + encodeURIComponent(postCodeInput.value), {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            console.error('Error:', data.error);
+                            // Re-enable fields if there was an error
+                            stateInput.disabled = originalStateDisabled;
+                            cityInput.disabled = originalCityDisabled;
+                            wardInput.disabled = originalWardDisabled;
+                        } else {
+                            // Fill the address fields and disable them
+                            if (data.state) {
+                                stateInput.value = data.state;
+                                stateInput.disabled = true;
+                            }
+                            if (data.city) {
+                                cityInput.value = data.city;
+                                cityInput.disabled = true;
+                            }
+                            if (data.ward) {
+                                wardInput.value = data.ward;
+                                wardInput.disabled = true;
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        // Re-enable fields if there was an error
+                        stateInput.disabled = originalStateDisabled;
+                        cityInput.disabled = originalCityDisabled;
+                        wardInput.disabled = originalWardDisabled;
+                    });
+                } else if (postCodeInput.value.length < 7) {
+                    // If the postal code is less than 7 digits, re-enable the fields to allow manual editing
+                    stateInput.disabled = originalStateDisabled;
+                    cityInput.disabled = originalCityDisabled;
+                    wardInput.disabled = originalWardDisabled;
+                }
+            });
+        });
+    </script>
 @stop
