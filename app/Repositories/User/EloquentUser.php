@@ -88,9 +88,19 @@ class EloquentUser implements UserRepository
     /**
      * {@inheritdoc}
      */
-    public function paginate(int $perPage, ?string $search = null, ?string $status = null): LengthAwarePaginator
+    public function paginate(int $perPage, ?string $search = null, ?string $status = null, ?int $roleFilter = null, ?int $createdByFilter = null): LengthAwarePaginator
     {
         $query = User::query();
+
+        // Apply role filter - only show users with role 3 (customers)
+        if ($roleFilter !== null) {
+            $query->where('role_id', $roleFilter);
+        }
+
+        // Apply created_by filter for non-admin users
+        if ($createdByFilter !== null) {
+            $query->where('created_by', $createdByFilter);
+        }
 
         if ($status) {
             $query->where('status', $status);
@@ -109,6 +119,14 @@ class EloquentUser implements UserRepository
 
         if ($status) {
             $result->appends(['status' => $status]);
+        }
+
+        if ($roleFilter) {
+            $result->appends(['role_filter' => $roleFilter]);
+        }
+
+        if ($createdByFilter) {
+            $result->appends(['created_by_filter' => $createdByFilter]);
         }
 
         return $result;

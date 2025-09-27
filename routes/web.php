@@ -24,6 +24,7 @@ use App\Http\Controllers\Web\SettingsController;
 use Vanguard\UserActivity\Http\Controllers\Web\ActivityController as WebActivityController;
 use App\Http\Controllers\Web\InstallController;
 use Vanguard\UserActivity\Http\Controllers\Web\ActivityController;
+use App\Http\Controllers\Web\Customers\CustomerController;
 
 /**
  * Authentication
@@ -122,6 +123,11 @@ Route::group(['middleware' => ['auth', 'verified', 'approved', 'password-change'
      */
     Route::resource('users', UsersController::class)
         ->except('update')->middleware('permission:users.manage');
+    /**
+     * Customer Management
+     */
+    Route::resource('customers', CustomerController::class)
+        ->middleware('permission:customers.manage');
 
     Route::group(['prefix' => 'users/{user}', 'middleware' => 'permission:users.manage'], function () {
         Route::put('update/approve', [UsersDetailsController::class, 'approve'])

@@ -14,7 +14,7 @@ interface UserRepository
     /**
      * Paginate registered users.
      */
-    public function paginate(int $perPage, ?string $search = null, ?string $status = null): LengthAwarePaginator;
+    public function paginate(int $perPage, ?string $search = null, ?string $status = null, ?int $roleFilter = null, ?int $createdByFilter = null): LengthAwarePaginator;
 
     /**
      * Find user by its id.

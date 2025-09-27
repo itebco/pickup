@@ -31,6 +31,15 @@
             @foreach (\Vanguard\Plugins\Vanguard::availablePlugins() as $plugin)
                 @include('partials.sidebar.items', ['item' => $plugin->sidebar()])
             @endforeach
+
+            @if(auth()->user()->hasPermission('customers.manage'))
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('customers*') ? 'active' : '' }}" href="{{ route('customers.index') }}">
+                        <i class="fas fa-user-friends"></i>
+                        <span>@lang('Customers')</span>
+                    </a>
+                </li>
+            @endif
         </ul>
     </div>
 </nav>
