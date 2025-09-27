@@ -56,7 +56,7 @@ class CustomerController extends Controller
 
         $customers = $this->users->paginate($perPage = 20, $request->search, $request->status, $roleFilter, $createdByFilter);
 
-        $statuses = ['' => __('All')] + UserStatus::lists();
+        $statuses = ['' => __('customer.all')] + UserStatus::lists();
 
         return view('customer.list', compact('customers', 'statuses'));
     }
@@ -80,7 +80,7 @@ class CustomerController extends Controller
      */
     private function parseCountries(CountryRepository $countryRepository): array
     {
-        return [0 => __('Select a Country')] + $countryRepository->lists()->toArray();
+        return [0 => __('customer.select_country')] + $countryRepository->lists()->toArray();
     }
 
     /**
@@ -113,7 +113,7 @@ class CustomerController extends Controller
         $this->users->create($data);
 
         return redirect()->route('customers.index')
-            ->withSuccess(__('Customer created successfully.'));
+            ->withSuccess(__('customer.created_successfully'));
     }
 
     /**
@@ -132,6 +132,10 @@ class CustomerController extends Controller
         CountryRepository $countryRepository,
         RoleRepository $roleRepository
     ): View {
+        if (!$this->canEditCustomer($customer)) {
+            abort(403, __('customer.no_permission_edit'));
+        }
+
         return view('customer.edit', [
             'edit' => true,
             'customer' => $customer,
@@ -147,6 +151,10 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, User $customer): RedirectResponse
     {
+        if (!$this->canEditCustomer($customer)) {
+            abort(403, __('customer.no_permission_edit'));
+        }
+
         $data = $request->all();
 
         // Ensure role_id remains 3 for customers and cannot be changed through the form
@@ -171,7 +179,7 @@ class CustomerController extends Controller
         $this->users->update($customer->id, $data);
 
         return redirect()->route('customers.index')
-            ->withSuccess(__('Customer updated successfully.'));
+            ->withSuccess(__('customer.updated_successfully'));
     }
 
     /**
@@ -179,14 +187,43 @@ class CustomerController extends Controller
      */
     public function destroy(User $customer): RedirectResponse
     {
-        if ($customer->id === Auth::id()) {
+        $currentUser = Auth::user();
+
+        // Check if current user is trying to delete themselves
+        if ($customer->id === $currentUser->id) {
             return redirect()->route('customers.index')
-                ->withErrors(__('You cannot delete yourself.'));
+                ->withErrors(__('customer.cannot_delete_yourself'));
+        }
+
+        if (!$this->canEditCustomer($customer)) {
+            abort(403, __('customer.no_permission_delete'));
         }
 
         $this->users->delete($customer->id);
 
         return redirect()->route('customers.index')
-            ->withSuccess(__('Customer deleted successfully.'));
+            ->withSuccess(__('customer.deleted_successfully'));
+    }
+
+    /**
+     * Determine if the current user can edit the given customer.
+     * Role 1 (admin) can delete any customer
+     * Role 2 (user) can only delete customers they created
+     */
+    public function canEditCustomer(User $customer): bool
+    {
+        $currentUser = Auth::user();
+
+        // Role 1 (admin) can edit any customer
+        if ($currentUser->role_id == 1) {
+            return true;
+        }
+
+        // Role 2 (user) can only edit customers they created
+        if ($currentUser->role_id == 2 && $customer->created_by == $currentUser->id) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -57,7 +57,7 @@
 
                     <div class="form-group">
                         <label for="created_at">@lang('Created At')</label>
-                        <input type="text" name="created_at" value="{{ $customer->created_at->format('M d, Y H:i') }}" id="created_at"
+                        <input type="text" name="created_at" value="{{ $customer->created_at->format('Y-m-d H:i:s') }}" id="created_at"
                                class="form-control" readonly>
                     </div>
                 </div>
@@ -71,6 +71,19 @@
                     <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-primary">
                         @lang('Edit')
                     </a>
+                    @if(auth()->user()->role_id == 1 || (auth()->user()->role_id == 2 && $customer->created_by == auth()->user()->id))
+                    <a href="{{ route('customers.destroy', $customer->id) }}"
+                       class="btn btn-danger"
+                       title="@lang('Delete Customer')"
+                       data-toggle="tooltip"
+                       data-placement="top"
+                       data-method="DELETE"
+                       data-confirm-title="@lang('Please Confirm')"
+                       data-confirm-text="@lang('Are you sure that you want to delete this customer?')"
+                       data-confirm-delete="@lang('Yes, delete it!')">
+                        @lang('Delete')
+                    </a>
+                    @endif
                 </div>
             </div>
         </div>

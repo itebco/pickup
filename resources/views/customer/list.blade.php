@@ -33,7 +33,7 @@
                             <th>@lang('Email')</th>
                             <th>@lang('Status')</th>
                             <th>@lang('Created')</th>
-                            <th style="width: 200px">@lang('Action')</th>
+                            <th style="width: 156px">@lang('Action')</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,12 +47,25 @@
                                         {{ $customer->status->name }}
                                     </span>
                                 </td>
-                                <td>{{ $customer->created_at->format('M d, Y') }}</td>
+                                <td>{{ $customer->created_at->format('Y-m-d H:i:s') }}</td>
                                 <td>
                                     <a href="{{ route('customers.edit', $customer->id) }}"
                                        class="btn btn-primary btn-sm">
                                         <i class="fas fa-edit"></i> @lang('Edit')
                                     </a>
+                                    @if(auth()->user()->role_id == 1 || (auth()->user()->role_id == 2 && $customer->created_by == auth()->user()->id))
+                                    <a href="{{ route('customers.destroy', $customer->id) }}"
+                                       class="btn btn-danger btn-sm"
+                                       title="@lang('Delete Customer')"
+                                       data-toggle="tooltip"
+                                       data-placement="top"
+                                       data-method="DELETE"
+                                       data-confirm-title="@lang('Please Confirm')"
+                                       data-confirm-text="@lang('Are you sure that you want to delete this customer?')"
+                                       data-confirm-delete="@lang('Yes, delete it!')">
+                                        <i class="fas fa-trash"></i> @lang('Delete')
+                                    </a>
+                                    @endif
                                 </td>
                             </tr>
                         @empty
