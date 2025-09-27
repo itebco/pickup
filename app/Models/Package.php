@@ -17,6 +17,9 @@ class Package extends Model
         'quantity', 'method', 'status', 'remark', 'created_by', 'user_id',
     ];
 
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_DONE = 'done';
+
     protected static function boot()
     {
         parent::boot();

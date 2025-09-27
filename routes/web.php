@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\AddressController;
 use \App\Http\Controllers\Web\Auth\LoginController;
 use \App\Http\Controllers\Web\Auth\RegisterController;
 use \App\Http\Controllers\Web\Auth\TwoFactorTokenController;
@@ -128,6 +129,12 @@ Route::group(['middleware' => ['auth', 'verified', 'approved', 'password-change'
      */
     Route::resource('customers', CustomerController::class)
         ->middleware('permission:customers.manage');
+
+    /**
+     * Address Management
+     */
+    Route::resource('addresses', AddressController::class)
+        ->middleware('permission:addresses.manage');
 
     Route::group(['prefix' => 'users/{user}', 'middleware' => 'permission:users.manage'], function () {
         Route::put('update/approve', [UsersDetailsController::class, 'approve'])

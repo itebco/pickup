@@ -16,8 +16,8 @@ class CreatePackagesTable extends Migration
         Schema::create('packages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('package_code')->unique();
-            $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('address_id');
             $table->dateTime('pickup_date');
             $table->string('pickup_time');

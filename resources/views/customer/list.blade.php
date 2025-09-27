@@ -70,7 +70,7 @@
                     <th class="min-width-100">@lang('customer.email')</th>
                     <th class="min-width-80">@lang('customer.created')</th>
                     <th class="min-width-80">@lang('customer.status')</th>
-                    <th class="text-center min-width-150">@lang('customer.action')</th>
+                    <th class="text-center min-width-150">@lang('app.action')</th>
                 </tr>
                 </thead>
                 <tbody>

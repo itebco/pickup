@@ -29,6 +29,10 @@ class Role extends Model
 
     public const DEFAULT_ADMIN_ROLE = 'Admin';
 
+    public const ADMIN_ROLE_ID = 1;
+    public const USER_ROLE_ID = 2;
+    public const CUSTOMER_ROLE_ID = 3;
+
     protected $table = 'roles';
 
     protected $casts = [

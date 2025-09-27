@@ -40,6 +40,16 @@
                     </a>
                 </li>
             @endif
+
+            @if(auth()->user()->hasPermission('addresses.manage'))
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('addresses*') ? 'active' : '' }}" href="{{ route('addresses.index') }}">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>@lang('address.addresses')</span>
+                    </a>
+                </li>
+            @endif
+
         </ul>
     </div>
 </nav>

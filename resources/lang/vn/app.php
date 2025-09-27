@@ -22,4 +22,36 @@ return [
         'Unconfirmed' => 'Chưa xác nhận',
         'Waiting Approval' => 'Đang chờ phê duyệt'
     ],
+
+    // Common action labels
+    'view' => 'Xem',
+    'action' => 'Hành động',
+    'edit' => 'Sửa',
+    'delete' => 'Xóa',
+    'cancel' => 'Hủy',
+    'add' => 'Thêm',
+    'update' => 'Cập nhật',
+    'back' => 'Quay lại',
+    'confirm' => 'Xác nhận',
+    'please_confirm' => 'Vui lòng xác nhận',
+    'are_you_sure' => 'Bạn có chắc chắn không?',
+    'yes_delete_it' => 'Có, xóa nó!',
+    'no' => 'Không',
+
+    // Common form labels
+    'name' => 'Tên',
+    'email' => 'Email',
+    'created_at' => 'Ngày tạo',
+    'created' => 'Đã tạo',
+    'updated_at' => 'Ngày cập nhật',
+    'updated' => 'Đã cập nhật',
+    'id' => 'ID',
+    'select' => 'Chọn',
+    'select_option' => 'Chọn một tùy chọn',
+
+    // Common messages
+    'no_records_found' => 'Không tìm thấy bản ghi nào.',
+    'record_created_successfully' => 'Bản ghi được tạo thành công.',
+    'record_updated_successfully' => 'Bản ghi được cập nhật thành công.',
+    'record_deleted_successfully' => 'Bản ghi được xóa thành công.',
 ];

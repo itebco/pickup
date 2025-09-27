@@ -12,14 +12,12 @@ class Address extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'customer_id', 'owner_name', 'tel', 'post_code',
-        'state', 'city', 'ward', 'type', 'room_no',
+        'user_id', 'owner_name', 'tel', 'post_code',
+        'state', 'city', 'ward', 'type', 'room_no', 'created_by',
     ];
 
-    public function customer()
-    {
-        return $this->belongsTo(User::class, 'customer_id', 'id');
-    }
+    public const TYPE_MANSION = 'mansion';
+    public const TYPE_APARTMENT = 'apartment';
 
     public function packages()
     {
@@ -38,7 +36,7 @@ class Address extends Model
 
     public function getTranslatedTypeAttribute()
     {
-        return Lang::get('address.type.' . $this->type);
+        return Lang::get('address.' . $this->type);
     }
 
     public function scopeType($query, $type)

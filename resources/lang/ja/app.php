@@ -22,4 +22,37 @@ return [
         'Unconfirmed' => '未確認',
         'Waiting Approval' => '承認待ち'
     ],
+
+    // Common action labels
+    'view' => '表示',
+    'action' => '操作',
+    'edit' => '編集',
+    'delete' => '削除',
+    'cancel' => 'キャンセル',
+    'add' => '追加',
+    'update' => '更新',
+    'back' => '戻る',
+    'confirm' => '確認',
+    'please_confirm' => '確認してください',
+    'are_you_sure' => 'よろしいですか？',
+    'yes_delete_it' => 'はい、削除します！',
+    'no' => 'いいえ',
+
+    // Common form labels
+    'name' => '名前',
+    'email' => 'メール',
+    'created_at' => '作成日時',
+    'created' => '作成日',
+    'updated_at' => '更新日時',
+    'updated' => '更新日',
+    'id' => 'ID',
+    'select' => '選択',
+    'select_option' => 'オプションを選択してください',
+    'postal_code' => '郵便番号',
+
+    // Common messages
+    'no_records_found' => 'レコードが見つかりません。',
+    'record_created_successfully' => 'レコードが正常に作成されました。',
+    'record_updated_successfully' => 'レコードが正常に更新されました。',
+    'record_deleted_successfully' => 'レコードが正常に削除されました。',
 ];

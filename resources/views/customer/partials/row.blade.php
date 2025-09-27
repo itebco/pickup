@@ -23,20 +23,20 @@
     <td class="text-center align-middle">
         <a href="{{ route('customers.edit', $customer->id) }}"
            class="btn btn-icon edit"
-           title="@lang('customer.edit_customer')"
+           title="@lang('app.edit')"
            data-toggle="tooltip" data-placement="top">
             <i class="fas fa-edit"></i>
         </a>
 
         <a href="{{ route('customers.destroy', $customer->id) }}"
            class="btn btn-icon"
-           title="@lang('customer.delete_customer')"
+           title="@lang('app.delete')"
            data-toggle="tooltip"
            data-placement="top"
            data-method="DELETE"
-           data-confirm-title="@lang('customer.please_confirm')"
-           data-confirm-text="@lang('customer.are_you_sure_delete_customer')"
-           data-confirm-delete="@lang('customer.yes_delete_it')">
+           data-confirm-title="@lang('app.please_confirm')"
+           data-confirm-text="@lang('app.are_you_sure')"
+           data-confirm-delete="@lang('app.yes_delete_it')">
            <i class="fas fa-trash"></i>
         </a>
     </td>

@@ -40,9 +40,6 @@ class CustomerController extends Controller
         });
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request): View
     {
         $currentUser = Auth::user();
@@ -61,9 +58,6 @@ class CustomerController extends Controller
         return view('customer.list', compact('customers', 'statuses'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(CountryRepository $countryRepository, RoleRepository $roleRepository): View
     {
         return view('customer.add', [
@@ -83,9 +77,6 @@ class CustomerController extends Controller
         return [0 => __('customer.select_country')] + $countryRepository->lists()->toArray();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(CreateCustomerRequest $request): RedirectResponse
     {
         // When customer is created by administrator, we will set their
@@ -116,11 +107,10 @@ class CustomerController extends Controller
             ->withSuccess(__('customer.created_successfully'));
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(User $customer): View
     {
+        // disable route
+        abort(404);
         if (!$this->canEditCustomer($customer)) {
             abort(403, __('customer.no_permission_edit'));
         }
@@ -128,9 +118,6 @@ class CustomerController extends Controller
         return view('customer.view', compact('customer'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(
         User $customer,
         CountryRepository $countryRepository,
@@ -150,9 +137,6 @@ class CustomerController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateCustomerRequest $request, User $customer): RedirectResponse
     {
         if (!$this->canEditCustomer($customer)) {
@@ -186,9 +170,6 @@ class CustomerController extends Controller
             ->withSuccess(__('customer.updated_successfully'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(User $customer): RedirectResponse
     {
         $currentUser = Auth::user();
