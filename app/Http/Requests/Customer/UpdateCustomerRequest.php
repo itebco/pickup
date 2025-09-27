@@ -16,7 +16,7 @@ class UpdateCustomerRequest extends Request
         return [
             'email' => 'email|unique:users,email,'.$user->id.',id',
             'username' => 'nullable|unique:users,username,'.$user->id.',id',
-            'password' => 'min:8|confirmed',
+            'password' => 'nullable|min:8|confirmed',
             'birthday' => 'nullable|date',
             'role_id' => 'exists:roles,id',
             'country_id' => 'exists:countries,id',
