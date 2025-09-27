@@ -121,6 +121,10 @@ class CustomerController extends Controller
      */
     public function show(User $customer): View
     {
+        if (!$this->canEditCustomer($customer)) {
+            abort(403, __('customer.no_permission_edit'));
+        }
+
         return view('customer.view', compact('customer'));
     }
 

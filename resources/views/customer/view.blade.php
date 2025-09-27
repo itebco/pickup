@@ -45,7 +45,7 @@
 
                     <div class="form-group">
                         <label for="status">@lang('customer.status')</label>
-                        <input type="text" name="status" value="{{ $customer->status->name() }}" id="status"
+                        <input type="text" name="status" value="{{ trans("app.status.{$customer->status->value}") }}" id="status"
                                class="form-control" readonly>
                     </div>
 
