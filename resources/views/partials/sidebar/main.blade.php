@@ -36,7 +36,7 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('customers*') ? 'active' : '' }}" href="{{ route('customers.index') }}">
                         <i class="fas fa-user-friends"></i>
-                        <span>@lang('Customers')</span>
+                        <span>@lang('customer.customers')</span>
                     </a>
                 </li>
             @endif
