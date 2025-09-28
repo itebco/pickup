@@ -147,4 +147,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return !$this->two_factor_confirmed_at && !!$this->two_factor_secret;
     }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class, 'user_id', 'id');
+    }
 }

@@ -21,6 +21,9 @@ return [
     'role' => 'Role',
 
     // Table headers
+    'name' => 'Name',
+    'email' => 'Email',
+    'created' => 'Created',
     'no_customers_found' => 'No customers found.',
     'leave_empty_to_keep_current_password' => 'Leave empty to keep current password',
 

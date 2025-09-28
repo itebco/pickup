@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\AddressController;
+use App\Http\Controllers\Web\PackageController;
 use \App\Http\Controllers\Web\Auth\LoginController;
 use \App\Http\Controllers\Web\Auth\RegisterController;
 use \App\Http\Controllers\Web\Auth\TwoFactorTokenController;
@@ -135,6 +136,12 @@ Route::group(['middleware' => ['auth', 'verified', 'approved', 'password-change'
      */
     Route::resource('addresses', AddressController::class)
         ->middleware('permission:addresses.manage');
+
+    /**
+     * Package Management
+     */
+    Route::resource('packages', PackageController::class)
+        ->middleware('permission:packages.manage');
 
     Route::group(['prefix' => 'users/{user}', 'middleware' => 'permission:users.manage'], function () {
         Route::put('update/approve', [UsersDetailsController::class, 'approve'])

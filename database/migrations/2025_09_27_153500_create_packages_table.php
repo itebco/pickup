@@ -26,6 +26,7 @@ class CreatePackagesTable extends Migration
             $table->string('status')->default('pending');
             $table->string('remark')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             // Create index for frequently queried fields
             $table->index('created_by');

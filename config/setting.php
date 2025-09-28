@@ -82,4 +82,16 @@ return [
     'required_extra_columns' => [
 
     ],
+
+    'package' => [
+        'pick_up_times' => env('PICK_UP_TIMES') ? explode(',', env('PICK_UP_TIMES')) : [
+            '08:00',
+            '09:00',
+            '10:00',
+        ],
+        'disable_pickup_dates' => env('DISABLE_PICKUP_DATES') ? explode(',', env('DISABLE_PICKUP_DATES')) : [
+            '12-25',
+            '09-30',
+        ],
+    ],
 ];

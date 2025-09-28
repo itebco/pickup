@@ -50,6 +50,15 @@
                 </li>
             @endif
 
+            @if(auth()->user()->hasPermission('packages.manage'))
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('packages*') ? 'active' : '' }}" href="{{ route('packages.index') }}">
+                        <i class="fas fa-box"></i>
+                        <span>@lang('package.packages')</span>
+                    </a>
+                </li>
+            @endif
+
         </ul>
     </div>
 </nav>
