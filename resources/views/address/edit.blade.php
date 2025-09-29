@@ -118,4 +118,22 @@
 
     <!-- YubinBango auto-address completion -->
     <script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+
+    <!-- String converter script -->
+    <script src="{{ asset('assets/js/string-converter.js') }}"></script>
+    <script>
+        // Apply character conversion to text inputs
+        document.addEventListener('DOMContentLoaded', function() {
+            const targetInputs = ['owner_name', 'ward', 'room_no'];
+            targetInputs.forEach(function(name) {
+                const input = document.querySelector('input[name="' + name + '"]');
+                if (input) {
+                    input.addEventListener('input', function() {
+                        // Convert half-width to full-width for alphanumeric characters
+                        this.value = toFullWidth(this.value);
+                    });
+                }
+            });
+        });
+    </script>
 @stop

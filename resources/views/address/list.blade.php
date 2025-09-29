@@ -109,11 +109,3 @@
 {!! $addresses->render() !!}
 
 @stop
-
-@section('scripts')
-    <script>
-        $("#status").change(function () {
-            $("#addresses-form").submit();
-        });
-    </script>
-@stop
