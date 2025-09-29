@@ -27,6 +27,9 @@ return [
     'no_customers_found' => 'No customers found.',
     'leave_empty_to_keep_current_password' => 'Leave empty to keep current password',
 
+    // Buttons
+    'cancel' => 'Cancel',
+
     // Confirmation messages
     'are_you_sure_delete_customer' => 'Are you sure that you want to delete this customer?',
 

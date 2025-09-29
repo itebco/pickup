@@ -84,7 +84,20 @@ class PackageController extends Controller
             $customer = $currentUser;
             $addresses = $customer->addresses;
             $customers = collect([$customer]); // Create a collection with just this user
-        } else {
+        }
+        elseif ($currentUser->role_id == Role::USER_ROLE_ID) {
+            // If current user is a user (role = 2), only get customers they created and their addresses
+            $customerIds = User::where('role_id', Role::CUSTOMER_ROLE_ID)
+                               ->where('created_by', $currentUser->id)
+                               ->pluck('id');
+            $customers = User::where('role_id', Role::CUSTOMER_ROLE_ID)
+                             ->where('created_by', $currentUser->id)
+                             ->with('addresses')
+                             ->get();
+            // Only get addresses of customers they created
+            $addresses = Address::whereIn('user_id', $customerIds)->get();
+        }
+        else {
             // For other roles, get all customers with their addresses using eager loading
             $customers = User::where('role_id', Role::CUSTOMER_ROLE_ID)->with('addresses')->get();
             $addresses = Address::all(); // All addresses for all customers

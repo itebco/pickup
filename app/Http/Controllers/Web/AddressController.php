@@ -49,7 +49,23 @@ class AddressController extends Controller
 
     public function create()
     {
-        $customers = User::where('role_id', Role::CUSTOMER_ROLE_ID)->get(); // Only customers
+        $currentUser = Auth::user();
+
+        if ($currentUser->role_id == Role::CUSTOMER_ROLE_ID) {
+            // If current user is a customer (role = 3), only get their information
+            $customers = collect([$currentUser]);
+        }
+        elseif ($currentUser->role_id == Role::USER_ROLE_ID) {
+            // If current user is a user (role = 2), only get customers they created
+            $customers = User::where('role_id', Role::CUSTOMER_ROLE_ID)
+                             ->where('created_by', $currentUser->id)
+                             ->get();
+        }
+        else {
+            // For other roles, get all customers
+            $customers = User::where('role_id', Role::CUSTOMER_ROLE_ID)->get(); // Only customers
+        }
+
         return view('address.add', compact('customers'));
     }
 
@@ -66,7 +82,6 @@ class AddressController extends Controller
     {
         // disable route
         abort(404);
-        return view('address.view', compact('address'));
     }
 
     public function edit(Address $address)
