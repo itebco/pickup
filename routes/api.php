@@ -86,7 +86,4 @@ Route::group(['middleware' => ['auth', 'verified', 'approved']], function () {
     Route::get('/settings', [SettingsController::class, 'index']);
 
     Route::get('/countries', [CountriesController::class, 'index']);
-    Route::get('addresses/search-by-postal-code', [AddressController::class, 'searchByPostalCode'])
-        ->name('addresses.search_by_postal_code')
-        ->middleware('permission:addresses.manage');
 });

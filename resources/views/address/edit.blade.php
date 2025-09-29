@@ -17,10 +17,11 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('addresses.update', $address->id) }}" method="POST" id="address-form">
+            <form action="{{ route('addresses.update', $address->id) }}" method="POST" id="address-form" class="h-adr">
                 @csrf
                 @method('PUT')
 
+                <span class="p-country-name" style="display:none;">Japan</span>
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
                         @if(auth()->user()->role_id == \App\Models\Role::CUSTOMER_ROLE_ID)
@@ -53,26 +54,26 @@
 
                         <div class="form-group">
                             <label for="post_code">@lang('address.labels.post_code')</label>
-                            <input type="number" name="post_code" value="{{ old('post_code', $address->post_code) }}" id="post_code"
-                                   class="form-control" required maxlength="7">
+                            <input type="text" name="post_code" value="{{ old('post_code', $address->post_code) }}" id="post_code"
+                                   class="form-control p-postal-code" required maxlength="8" pattern="\d{3}-?\d{4}">
                         </div>
 
                         <div class="form-group">
                             <label for="state">@lang('address.labels.state')</label>
                             <input type="text" name="state" value="{{ old('state', $address->state) }}" id="state"
-                                   class="form-control" required>
+                                   class="form-control p-region" required>
                         </div>
 
                         <div class="form-group">
                             <label for="city">@lang('address.labels.city')</label>
                             <input type="text" name="city" value="{{ old('city', $address->city) }}" id="city"
-                                   class="form-control" required>
+                                   class="form-control p-locality" required>
                         </div>
 
                         <div class="form-group">
                             <label for="ward">@lang('address.labels.ward')</label>
                             <input type="text" name="ward" value="{{ old('ward', $address->ward) }}" id="ward"
-                                   class="form-control" required>
+                                   class="form-control p-street-address" required>
                         </div>
 
                         <div class="form-group">
@@ -115,65 +116,6 @@
     <script src="{{ asset('assets/js/as/btn.js') }}"></script>
     {!! JsValidator::formRequest('App\Http\Requests\Address\UpdateAddressRequest', '#address-form') !!}
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const postCodeInput = document.getElementById('post_code');
-            const stateInput = document.getElementById('state');
-            const cityInput = document.getElementById('city');
-            const wardInput = document.getElementById('ward');
-
-            // Store original disabled state
-            const originalStateDisabled = stateInput.disabled;
-            const originalCityDisabled = cityInput.disabled;
-            const originalWardDisabled = wardInput.disabled;
-
-            postCodeInput.addEventListener('input', function() {
-                if (postCodeInput.value.length === 7 && /^\d+$/.test(postCodeInput.value)) {
-                    // Call the postal code search API
-                    fetch('{{ route('api.addresses.search_by_postal_code') }}?postal_code=' + encodeURIComponent(postCodeInput.value), {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            console.error('Error:', data.error);
-                            // Re-enable fields if there was an error
-                            stateInput.disabled = originalStateDisabled;
-                            cityInput.disabled = originalCityDisabled;
-                            wardInput.disabled = originalWardDisabled;
-                        } else {
-                            // Fill the address fields and disable them
-                            if (data.state) {
-                                stateInput.value = data.state;
-                                stateInput.disabled = true;
-                            }
-                            if (data.city) {
-                                cityInput.value = data.city;
-                                cityInput.disabled = true;
-                            }
-                            if (data.ward) {
-                                wardInput.value = data.ward;
-                                wardInput.disabled = true;
-                            }
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        // Re-enable fields if there was an error
-                        stateInput.disabled = originalStateDisabled;
-                        cityInput.disabled = originalCityDisabled;
-                        wardInput.disabled = originalWardDisabled;
-                    });
-                } else if (postCodeInput.value.length < 7) {
-                    // If the postal code is less than 7 digits, re-enable the fields to allow manual editing
-                    stateInput.disabled = originalStateDisabled;
-                    cityInput.disabled = originalCityDisabled;
-                    wardInput.disabled = originalWardDisabled;
-                }
-            });
-        });
-    </script>
+    <!-- YubinBango auto-address completion -->
+    <script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
 @stop
