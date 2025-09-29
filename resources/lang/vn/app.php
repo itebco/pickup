@@ -54,4 +54,5 @@ return [
     'record_created_successfully' => 'Bản ghi được tạo thành công.',
     'record_updated_successfully' => 'Bản ghi được cập nhật thành công.',
     'record_deleted_successfully' => 'Bản ghi được xóa thành công.',
+    'special_characters_removed' => 'Các ký tự đặc biệt đã được xóa',
 ];

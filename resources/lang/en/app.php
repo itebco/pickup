@@ -54,4 +54,5 @@ return [
     'record_created_successfully' => 'Record created successfully.',
     'record_updated_successfully' => 'Record updated successfully.',
     'record_deleted_successfully' => 'Record deleted successfully.',
+    'special_characters_removed' => 'Special characters have been removed',
 ];

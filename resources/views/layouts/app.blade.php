@@ -45,5 +45,72 @@
     @yield('scripts')
 
     @hook('app:scripts')
+
+    <!-- Script to remove special characters from text inputs and textareas on focusout -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const disableCharacters = @json(config('setting.disable_characters'));
+
+            // Function to remove special characters from a string
+            function removeSpecialCharacters(str) {
+                if (!disableCharacters || disableCharacters.length === 0) {
+                    return str;
+                }
+
+                // Create a regex pattern to match any of the disabled characters
+                const pattern = new RegExp('[' + disableCharacters.map(char =>
+                    // Escape special regex characters
+                    char.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+                ).join('') + ']', 'g');
+
+                return str.replace(pattern, '');
+            }
+
+            // Handle focusout event for text inputs and textareas
+            document.addEventListener('focusout', function(e) {
+                const target = e.target;
+
+                // Check if the element is a text input or textarea
+                if ((target.tagName === 'INPUT' && target.type === 'text') ||
+                    target.tagName === 'TEXTAREA') {
+
+                    // Remove special characters and update the value
+                    if (target.value) {
+                        const originalValue = target.value;
+                        const cleanedValue = removeSpecialCharacters(originalValue);
+
+                        if (originalValue !== cleanedValue) {
+                            target.value = cleanedValue;
+
+                            // Trigger input event to notify any listeners
+                            target.dispatchEvent(new Event('input', { bubbles: true }));
+
+                            // Show a notification if available (optional)
+                            if (window.toast) {
+                                toast.warning('{{ __("app.special_characters_removed") }}.');
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Also handle form submission to clean all fields
+            document.addEventListener('submit', function(e) {
+                const textInputs = document.querySelectorAll('input[type="text"]');
+                const textareas = document.querySelectorAll('textarea');
+
+                [...textInputs, ...textareas].forEach(field => {
+                    if (field.value) {
+                        const originalValue = field.value;
+                        const cleanedValue = removeSpecialCharacters(originalValue);
+
+                        if (originalValue !== cleanedValue) {
+                            field.value = cleanedValue;
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

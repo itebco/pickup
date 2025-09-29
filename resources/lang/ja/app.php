@@ -55,4 +55,5 @@ return [
     'record_created_successfully' => 'レコードが正常に作成されました。',
     'record_updated_successfully' => 'レコードが正常に更新されました。',
     'record_deleted_successfully' => 'レコードが正常に削除されました。',
+    'special_characters_removed' => '特殊文字が削除されました',
 ];

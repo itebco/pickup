@@ -44,6 +44,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->web([
             \App\Http\Middleware\SetLocale::class,
+            \App\Http\Middleware\RemoveSpecialCharacters::class,
             'banned',
         ]);
 
@@ -51,6 +52,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\UseApiGuard::class,
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:60,1',
+            \App\Http\Middleware\RemoveSpecialCharacters::class,
             'banned',
         ]);
     })
