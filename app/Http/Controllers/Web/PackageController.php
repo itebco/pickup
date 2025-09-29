@@ -97,6 +97,14 @@ class PackageController extends Controller
     {
         $currentUser = Auth::user();
 
+        // Check if package status is done or pickup date is in the past
+        $currentDate = now()->format('Y-m-d');
+        $pickupDate = $package->pickup_date;
+
+        if ($package->status === Package::STATUS_DONE || $pickupDate <= $currentDate) {
+            abort(403, __('package.package_cannot_be_edited'));
+        }
+
         // Check if the current user is a customer and if the package belongs to them
         if ($currentUser->role_id == Role::CUSTOMER_ROLE_ID) {
             // Verify that the package belongs to an address owned by the current user
@@ -150,6 +158,14 @@ class PackageController extends Controller
     {
         $currentUser = Auth::user();
 
+        // Check if package status is done or pickup date is in the past
+        $currentDate = now()->format('Y-m-d');
+        $pickupDate = $package->pickup_date;
+
+        if ($package->status === Package::STATUS_DONE || $pickupDate <= $currentDate) {
+            abort(403, __('package.package_cannot_be_edited'));
+        }
+
         // Check if the current user is a customer and if the package belongs to them
         if ($currentUser->role_id == Role::CUSTOMER_ROLE_ID) {
             // Verify that the package belongs to an address owned by the current user
@@ -181,6 +197,14 @@ class PackageController extends Controller
     public function destroy(Package $package)
     {
         $currentUser = Auth::user();
+
+        // Check if package status is done or pickup date is in the past
+        $currentDate = now()->format('Y-m-d');
+        $pickupDate = $package->pickup_date;
+
+        if ($package->status === Package::STATUS_DONE || $pickupDate <= $currentDate) {
+            abort(403, __('package.package_cannot_be_deleted'));
+        }
 
         // Check if the current user is a customer and if the package belongs to them
         if ($currentUser->role_id == Role::CUSTOMER_ROLE_ID) {

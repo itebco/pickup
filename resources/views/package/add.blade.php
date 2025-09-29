@@ -84,7 +84,7 @@
                         <div class="form-group">
                             <label for="quantity">@lang('package.labels.quantity')</label>
                             <input type="number" name="quantity" value="{{ old('quantity', 1) }}" id="quantity"
-                                   class="form-control" required min="1" max="100000">
+                                   class="form-control" required min="1" max="10">
                         </div>
 
                         <div class="form-group">

@@ -19,7 +19,7 @@ class CreatePackagesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('address_id');
-            $table->dateTime('pickup_date');
+            $table->date('pickup_date');
             $table->string('pickup_time');
             $table->integer('quantity')->default(1);
             $table->string('method');

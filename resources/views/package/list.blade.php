@@ -80,24 +80,40 @@
                                 <td>{{ $package->translated_status }}</td>
                                 <td title="{{ $package->remark }}">{{ strlen($package->remark) > 30 ? substr($package->remark, 0, 30) . '...' : $package->remark }}</td>
                                 <td class="text-center align-middle">
-                                    <a href="{{ route('packages.edit', $package->id) }}"
-                                       class="btn btn-icon edit"
-                                       title="@lang('app.edit')"
-                                       data-toggle="tooltip" data-placement="top">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
+                                    @php
+                                        $currentDate = \Carbon\Carbon::now()->format('Y-m-d');
+                                        $canEdit = $package->status !== 'done' && $package->pickup_date > $currentDate;
+                                    @endphp
+                                    @if($canEdit)
+                                        <a href="{{ route('packages.edit', $package->id) }}"
+                                           class="btn btn-icon edit"
+                                           title="@lang('app.edit')"
+                                           data-toggle="tooltip" data-placement="top">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    @else
+                                        <span class="btn btn-icon disabled" title="@lang('package.package_cannot_be_edited')" data-toggle="tooltip" data-placement="top">
+                                            <i class="fas fa-edit text-muted"></i>
+                                        </span>
+                                    @endif
 
-                                    <a href="{{ route('packages.destroy', $package->id) }}"
-                                       class="btn btn-icon"
-                                       title="@lang('app.delete')"
-                                       data-toggle="tooltip"
-                                       data-placement="top"
-                                       data-method="DELETE"
-                                       data-confirm-title="@lang('app.please_confirm')"
-                                       data-confirm-text="@lang('app.are_you_sure')"
-                                       data-confirm-delete="@lang('app.yes_delete_it')">
-                                       <i class="fas fa-trash"></i>
-                                    </a>
+                                    @if($canEdit)
+                                        <a href="{{ route('packages.destroy', $package->id) }}"
+                                           class="btn btn-icon"
+                                           title="@lang('app.delete')"
+                                           data-toggle="tooltip"
+                                           data-placement="top"
+                                           data-method="DELETE"
+                                           data-confirm-title="@lang('app.please_confirm')"
+                                           data-confirm-text="@lang('app.are_you_sure')"
+                                           data-confirm-delete="@lang('app.yes_delete_it')">
+                                           <i class="fas fa-trash"></i>
+                                        </a>
+                                    @else
+                                        <span class="btn btn-icon disabled" title="@lang('package.package_cannot_be_deleted')" data-toggle="tooltip" data-placement="top">
+                                            <i class="fas fa-trash text-muted"></i>
+                                        </span>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

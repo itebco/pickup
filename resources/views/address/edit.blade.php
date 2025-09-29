@@ -55,19 +55,19 @@
                         <div class="form-group">
                             <label for="post_code">@lang('address.labels.post_code')</label>
                             <input type="text" name="post_code" value="{{ old('post_code', $address->post_code) }}" id="post_code"
-                                   class="form-control p-postal-code" required maxlength="8" pattern="\d{3}-?\d{4}">
+                                   class="form-control p-postal-code" required maxlength="7" pattern="\d{7}">
                         </div>
 
                         <div class="form-group">
                             <label for="state">@lang('address.labels.state')</label>
                             <input type="text" name="state" value="{{ old('state', $address->state) }}" id="state"
-                                   class="form-control p-region" required>
+                                   class="form-control p-region" required readonly>
                         </div>
 
                         <div class="form-group">
                             <label for="city">@lang('address.labels.city')</label>
                             <input type="text" name="city" value="{{ old('city', $address->city) }}" id="city"
-                                   class="form-control p-locality" required>
+                                   class="form-control p-locality" required readonly>
                         </div>
 
                         <div class="form-group">
