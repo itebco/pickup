@@ -15,6 +15,8 @@ return [
     'address_deleted_successfully' => '住所が正常に削除されました',
     'unauthorized_to_edit_address' => 'この住所を編集する権限がありません',
     'unauthorized_to_delete_address' => 'この住所を削除する権限がありません',
+    'address_cannot_be_edited_due_to_packages' => 'ステータスが完了またはピックアップ日が過去のパッケージがあるため、住所を編集できません',
+    'address_cannot_be_deleted_due_to_packages' => 'ステータスが完了またはピックアップ日が過去のパッケージがあるため、住所を削除できません',
     'no_addresses_found' => '住所が見つかりません',
     'please_confirm' => '確認してください',
     'are_you_sure_delete_address' => 'この住所を削除してもよろしいですか？',

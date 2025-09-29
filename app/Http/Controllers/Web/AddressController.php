@@ -5,13 +5,12 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\User;
+use App\Models\Package;
 use App\Http\Requests\Address\CreateAddressRequest;
 use App\Http\Requests\Address\UpdateAddressRequest;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 class AddressController extends Controller
 {
@@ -97,6 +96,11 @@ class AddressController extends Controller
             }
         }
 
+        // Check if address has packages with status 'Done' or pickup date <= current date
+        if ($this->hasRestrictedPackages($address)) {
+            abort(403, __('address.address_cannot_be_edited_due_to_packages'));
+        }
+
         if ($currentUser->role_id == Role::CUSTOMER_ROLE_ID) {
             // If current user is a customer (role = 3), only get their information
             $customers = collect([$currentUser]); // Create a collection with just this user
@@ -142,6 +146,11 @@ class AddressController extends Controller
             }
         }
 
+        // Check if address has packages with status 'Done' or pickup date <= current date
+        if ($this->hasRestrictedPackages($address)) {
+            abort(403, __('address.address_cannot_be_edited_due_to_packages'));
+        }
+
         $address->update($request->validated());
 
         return redirect()->route('addresses.index')->with('success', __('address.address_updated_successfully'));
@@ -174,8 +183,25 @@ class AddressController extends Controller
             }
         }
 
+        // Check if address has packages with status 'Done' or pickup date <= current date
+        if ($this->hasRestrictedPackages($address)) {
+            abort(403, __('address.address_cannot_be_deleted_due_to_packages'));
+        }
+
         $address->delete();
 
         return redirect()->route('addresses.index')->with('success', __('address.address_deleted_successfully'));
+    }
+
+    /**
+     * Check if address has packages with status 'Done' or pickup date <= current date
+    */
+    public function hasRestrictedPackages(Address $address)
+    {
+        $currentDate = now()->format('Y-m-d');
+        return $address->packages()->where(function($query) use ($currentDate) {
+            $query->where('status', Package::STATUS_DONE)
+                  ->orWhere('pickup_date', '<=', $currentDate);
+        })->exists();
     }
 }

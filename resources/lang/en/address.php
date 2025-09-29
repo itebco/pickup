@@ -15,6 +15,8 @@ return [
     'address_deleted_successfully' => 'Address deleted successfully',
     'unauthorized_to_edit_address' => 'Unauthorized to edit this address',
     'unauthorized_to_delete_address' => 'Unauthorized to delete this address',
+    'address_cannot_be_edited_due_to_packages' => 'Address cannot be edited because it has packages with status Done or pickup date in the past',
+    'address_cannot_be_deleted_due_to_packages' => 'Address cannot be deleted because it has packages with status Done or pickup date in the past',
     'no_addresses_found' => 'No addresses found',
     'are_you_sure_delete_address' => 'Are you sure you want to delete this address?',
     'update_address' => 'Update Address',
