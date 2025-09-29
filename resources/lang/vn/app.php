@@ -48,6 +48,9 @@ return [
     'id' => 'ID',
     'select' => 'Chọn',
     'select_option' => 'Chọn một tùy chọn',
+    'all' => 'Tất cả',
+    'filter' => 'Lọc',
+    'reset' => 'Đặt lại',
 
     // Common messages
     'no_records_found' => 'Không tìm thấy bản ghi nào.',

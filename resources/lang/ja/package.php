@@ -46,6 +46,8 @@ return [
         'method' => '方法',
         'status' => 'ステータス',
         'remark' => '備考',
+        'pickup_date_from' => 'ピックアップ日（開始）',
+        'pickup_date_to' => 'ピックアップ日（終了）',
     ],
     'validation' => [
         'customer_id_required' => '顧客は必須です',

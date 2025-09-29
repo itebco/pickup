@@ -39,6 +39,8 @@ return [
         'method' => 'Method',
         'status' => 'Status',
         'remark' => 'Remark',
+        'pickup_date_from' => 'Pickup Date From',
+        'pickup_date_to' => 'Pickup Date To',
     ],
     'validation' => [
         'customer_id_required' => 'Customer is required',

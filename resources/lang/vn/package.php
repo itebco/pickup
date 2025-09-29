@@ -46,6 +46,8 @@ return [
         'method' => 'Phương thức',
         'status' => 'Trạng thái',
         'remark' => 'Ghi chú',
+        'pickup_date_from' => 'Ngày lấy hàng từ',
+        'pickup_date_to' => 'Ngày lấy hàng đến',
     ],
     'validation' => [
         'customer_id_required' => 'Khách hàng là bắt buộc',

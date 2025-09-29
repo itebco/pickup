@@ -37,6 +37,7 @@ class PackageController extends Controller
             });
         }
 
+        // Filter by search
         if ($request->has('search') && $request->get('search') != '') {
             $search = $request->get('search');
             $query->where('package_code', 'LIKE', "%{$search}%")
@@ -49,8 +50,23 @@ class PackageController extends Controller
                 //           $q->whereIn('user_id', $customerIds);
                 //       }
                 //   })
-                  ->orWhere('status', 'LIKE', "%{$search}%")
+                //   ->orWhere('status', 'LIKE', "%{$search}%")
                   ->orWhere('method', 'LIKE', "%{$search}%");
+        }
+
+        // Filter by pickup_date from
+        if ($request->get('pickup_date_from')) {
+            $query->where('pickup_date', '>=', $request->get('pickup_date_from'));
+        }
+
+        // Filter by pickup_date to
+        if ($request->get('pickup_date_to')) {
+            $query->where('pickup_date', '<=', $request->get('pickup_date_to'));
+        }
+
+        // Filter by status
+        if ($request->get('status') && $request->get('status') != 'all') {
+            $query->where('status', $request->get('status'));
         }
 
         $packages = $query->orderBy('id', 'desc')->paginate(15)->appends(request()->query());

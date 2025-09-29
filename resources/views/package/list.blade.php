@@ -48,7 +48,63 @@
                     </a>
                 </div>
             </div>
-        </form>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="pickup_date_from">@lang('package.labels.pickup_date_from')</label>
+                        <input type="date"
+                               class="form-control input-solid"
+                               name="pickup_date_from"
+                               id="pickup_date_from"
+                               value="{{ Request::get('pickup_date_from') }}">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="pickup_date_to">@lang('package.labels.pickup_date_to')</label>
+                        <input type="date"
+                               class="form-control input-solid"
+                               name="pickup_date_to"
+                               id="pickup_date_to"
+                               value="{{ Request::get('pickup_date_to') }}">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="status">@lang('package.labels.status')</label>
+                        <select name="status" id="status" class="form-control input-solid">
+                            <option value="">@lang('app.all')</option>
+                            <option value="pending" {{ Request::get('status') == 'pending' ? 'selected' : '' }}>
+                                @lang('package.status.pending')
+                            </option>
+                            <option value="done" {{ Request::get('status') == 'done' ? 'selected' : '' }}>
+                                @lang('package.status.done')
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+               <div class="col-md-3">
+                   <div class="form-group pt-4">
+                       {{-- <button class="btn btn-primary btn-rounded float-right" type="submit">
+                           <i class="fas fa-filter mr-2"></i>
+                           @lang('app.filter')
+                       </button> --}}
+                       @if(Request::has('pickup_date_from') || Request::has('pickup_date_to') || Request::has('status'))
+                           <a href="{{ route('packages.index') }}"
+                              class="btn btn-light btn-rounded float-right mr-2"
+                              role="button">
+                               <i class="fas fa-times mr-2"></i>
+                               @lang('app.reset')
+                           </a>
+                       @endif
+                   </div>
+               </div>
+           </div>
+       </form>
 
         <div class="table-responsive" id="packages-table-wrapper" style="min-height: 200px;">
             <table class="table table-borderless table-striped">
@@ -135,6 +191,11 @@
 @section('scripts')
     <script>
         $("#status").change(function () {
+            $("#packages-form").submit();
+        });
+
+        // Also submit when pickup date fields change
+        $("#pickup_date_from, #pickup_date_to").change(function () {
             $("#packages-form").submit();
         });
     </script>

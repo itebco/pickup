@@ -48,6 +48,9 @@ return [
     'id' => 'ID',
     'select' => 'Select',
     'select_option' => 'Select an option',
+    'all' => 'All',
+    'filter' => 'Filter',
+    'reset' => 'Reset',
 
     // Common messages
     'no_records_found' => 'No records found.',

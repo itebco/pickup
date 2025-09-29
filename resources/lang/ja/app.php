@@ -49,6 +49,9 @@ return [
     'select' => '選択',
     'select_option' => 'オプションを選択してください',
     'postal_code' => '郵便番号',
+    'all' => 'すべて',
+    'filter' => 'フィルター',
+    'reset' => 'リセット',
 
     // Common messages
     'no_records_found' => 'レコードが見つかりません。',
