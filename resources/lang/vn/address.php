@@ -13,6 +13,8 @@ return [
     'address_added_successfully' => 'Địa chỉ đã được thêm thành công',
     'address_updated_successfully' => 'Địa chỉ đã được cập nhật thành công',
     'address_deleted_successfully' => 'Địa chỉ đã được xóa thành công',
+    'unauthorized_to_edit_address' => 'Không có quyền chỉnh sửa địa chỉ này',
+    'unauthorized_to_delete_address' => 'Không có quyền xóa địa chỉ này',
     'no_addresses_found' => 'Không tìm thấy địa chỉ nào',
     'please_confirm' => 'Vui lòng xác nhận',
     'are_you_sure_delete_address' => 'Bạn có chắc chắn muốn xóa địa chỉ này?',

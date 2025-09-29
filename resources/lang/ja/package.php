@@ -14,6 +14,8 @@ return [
     'package_added_successfully' => 'パッケージが正常に追加されました',
     'package_updated_successfully' => 'パッケージが正常に更新されました',
     'package_deleted_successfully' => 'パッケージが正常に削除されました',
+    'unauthorized_to_edit_package' => 'このパッケージを編集する権限がありません',
+    'unauthorized_to_delete_package' => 'このパッケージを削除する権限がありません',
     'no_packages_found' => 'パッケージが見つかりません',
     'please_confirm' => '確認してください',
     'are_you_sure_delete_package' => 'このパッケージを削除してもよろしいですか？',

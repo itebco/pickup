@@ -17,14 +17,38 @@ class PackageController extends Controller
 {
     public function index(Request $request)
     {
+        $currentUser = Auth::user();
         $query = Package::query();
+
+        // If current user is a customer (role = 3), only get their packages
+        if ($currentUser->role_id == Role::CUSTOMER_ROLE_ID) {
+            $query->whereHas('address', function($q) use ($currentUser) {
+                $q->where('user_id', $currentUser->id);
+            });
+        }
+        // If current user is a user (role = 2), only get packages of customers they created
+        elseif ($currentUser->role_id == Role::USER_ROLE_ID) {
+            // Get the IDs of customers (role = 3) that were created by this user
+            $customerIds = User::where('role_id', Role::CUSTOMER_ROLE_ID)
+                               ->where('created_by', $currentUser->id)
+                               ->pluck('id');
+            $query->whereHas('address', function($q) use ($customerIds) {
+                $q->whereIn('user_id', $customerIds);
+            });
+        }
 
         if ($request->has('search') && $request->get('search') != '') {
             $search = $request->get('search');
             $query->where('package_code', 'LIKE', "%{$search}%")
-                  ->orWhereHas('address', function($q) use ($search) {
-                      $q->where('owner_name', 'LIKE', "%{$search}%");
-                  })
+                //   ->orWhereHas('address', function($q) use ($search, $currentUser, $customerIds) {
+                //       $q->where('owner_name', 'LIKE', "%{$search}%");
+                //       if ($currentUser->role_id == Role::CUSTOMER_ROLE_ID) {
+                //           $q->where('user_id', $currentUser->id);
+                //       }
+                //       elseif ($currentUser->role_id == Role::USER_ROLE_ID) {
+                //           $q->whereIn('user_id', $customerIds);
+                //       }
+                //   })
                   ->orWhere('status', 'LIKE', "%{$search}%")
                   ->orWhere('method', 'LIKE', "%{$search}%");
         }
@@ -72,6 +96,30 @@ class PackageController extends Controller
     public function edit(Package $package)
     {
         $currentUser = Auth::user();
+
+        // Check if the current user is a customer and if the package belongs to them
+        if ($currentUser->role_id == Role::CUSTOMER_ROLE_ID) {
+            // Verify that the package belongs to an address owned by the current user
+            $isPackageOwnedByUser = $package->address->user_id == $currentUser->id;
+
+            if (!$isPackageOwnedByUser) {
+                abort(403, __('package.unauthorized_to_edit_package'));
+            }
+        }
+        // Check if the current user is a user and if the package belongs to a customer they created
+        elseif ($currentUser->role_id == Role::USER_ROLE_ID) {
+            // Get the IDs of customers (role = 3) that were created by this user
+            $customerIds = User::where('role_id', Role::CUSTOMER_ROLE_ID)
+                               ->where('created_by', $currentUser->id)
+                               ->pluck('id');
+            // Verify that the package belongs to one of the customers created by the current user
+            $isPackageOwnedByCreatedCustomer = in_array($package->address->user_id, $customerIds->toArray());
+
+            if (!$isPackageOwnedByCreatedCustomer) {
+                abort(403, __('package.unauthorized_to_edit_package'));
+            }
+        }
+
         $pickUpTimes = config('setting.package.pick_up_times');
 
         if ($currentUser->role_id == Role::CUSTOMER_ROLE_ID) {
@@ -79,7 +127,17 @@ class PackageController extends Controller
             $customer = $currentUser;
             $addresses = $customer->addresses;
             $customers = collect([$customer]); // Create a collection with just this user
-        } else {
+        }
+        elseif ($currentUser->role_id == Role::USER_ROLE_ID) {
+            // If current user is a user (role = 2), only get customers they created and their addresses
+            $customers = User::where('role_id', Role::CUSTOMER_ROLE_ID)
+                             ->where('created_by', $currentUser->id)
+                             ->with('addresses')
+                             ->get();
+            // Only get addresses of customers they created
+            $addresses = Address::whereIn('user_id', $customerIds)->get();
+        }
+        else {
             // For other roles, get all customers with their addresses using eager loading
             $customers = User::where('role_id', Role::CUSTOMER_ROLE_ID)->with('addresses')->get();
             $addresses = Address::all(); // All addresses for all customers
@@ -90,6 +148,31 @@ class PackageController extends Controller
 
     public function update(UpdatePackageRequest $request, Package $package)
     {
+        $currentUser = Auth::user();
+
+        // Check if the current user is a customer and if the package belongs to them
+        if ($currentUser->role_id == Role::CUSTOMER_ROLE_ID) {
+            // Verify that the package belongs to an address owned by the current user
+            $isPackageOwnedByUser = $package->address->user_id == $currentUser->id;
+
+            if (!$isPackageOwnedByUser) {
+                abort(403, __('package.unauthorized_to_edit_package'));
+            }
+        }
+        // Check if the current user is a user and if the package belongs to a customer they created
+        elseif ($currentUser->role_id == Role::USER_ROLE_ID) {
+            // Get the IDs of customers (role = 3) that were created by this user
+            $customerIds = User::where('role_id', Role::CUSTOMER_ROLE_ID)
+                               ->where('created_by', $currentUser->id)
+                               ->pluck('id');
+            // Verify that the package belongs to one of the customers created by the current user
+            $isPackageOwnedByCreatedCustomer = in_array($package->address->user_id, $customerIds->toArray());
+
+            if (!$isPackageOwnedByCreatedCustomer) {
+                abort(403, 'Unauthorized to edit this package');
+            }
+        }
+
         $package->update($request->validated());
 
         return redirect()->route('packages.index')->with('success', __('package.package_updated_successfully'));
@@ -97,6 +180,31 @@ class PackageController extends Controller
 
     public function destroy(Package $package)
     {
+        $currentUser = Auth::user();
+
+        // Check if the current user is a customer and if the package belongs to them
+        if ($currentUser->role_id == Role::CUSTOMER_ROLE_ID) {
+            // Verify that the package belongs to an address owned by the current user
+            $isPackageOwnedByUser = $package->address->user_id == $currentUser->id;
+
+            if (!$isPackageOwnedByUser) {
+                abort(403, __('package.unauthorized_to_delete_package'));
+            }
+        }
+        // Check if the current user is a user and if the package belongs to a customer they created
+        elseif ($currentUser->role_id == Role::USER_ROLE_ID) {
+            // Get the IDs of customers (role = 3) that were created by this user
+            $customerIds = User::where('role_id', Role::CUSTOMER_ROLE_ID)
+                               ->where('created_by', $currentUser->id)
+                               ->pluck('id');
+            // Verify that the package belongs to one of the customers created by the current user
+            $isPackageOwnedByCreatedCustomer = in_array($package->address->user_id, $customerIds->toArray());
+
+            if (!$isPackageOwnedByCreatedCustomer) {
+                abort(403, 'Unauthorized to delete this package');
+            }
+        }
+
         $package->delete();
 
         return redirect()->route('packages.index')->with('success', __('package.package_deleted_successfully'));

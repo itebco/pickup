@@ -14,6 +14,8 @@ return [
     'package_added_successfully' => 'Gói hàng đã được thêm thành công',
     'package_updated_successfully' => 'Gói hàng đã được cập nhật thành công',
     'package_deleted_successfully' => 'Gói hàng đã được xóa thành công',
+    'unauthorized_to_edit_package' => 'Không có quyền chỉnh sửa gói hàng này',
+    'unauthorized_to_delete_package' => 'Không có quyền xóa gói hàng này',
     'no_packages_found' => 'Không tìm thấy gói hàng nào',
     'please_confirm' => 'Vui lòng xác nhận',
     'are_you_sure_delete_package' => 'Bạn có chắc chắn muốn xóa gói hàng này?',

@@ -14,6 +14,8 @@ return [
     'package_added_successfully' => 'Package added successfully',
     'package_updated_successfully' => 'Package updated successfully',
     'package_deleted_successfully' => 'Package deleted successfully',
+    'unauthorized_to_edit_package' => 'Unauthorized to edit this package',
+    'unauthorized_to_delete_package' => 'Unauthorized to delete this package',
     'no_packages_found' => 'No packages found',
     'are_you_sure_delete_package' => 'Are you sure you want to delete this package?',
     'update_package' => 'Update Package',

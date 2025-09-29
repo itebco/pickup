@@ -13,6 +13,8 @@ return [
     'address_added_successfully' => 'Address added successfully',
     'address_updated_successfully' => 'Address updated successfully',
     'address_deleted_successfully' => 'Address deleted successfully',
+    'unauthorized_to_edit_address' => 'Unauthorized to edit this address',
+    'unauthorized_to_delete_address' => 'Unauthorized to delete this address',
     'no_addresses_found' => 'No addresses found',
     'are_you_sure_delete_address' => 'Are you sure you want to delete this address?',
     'update_address' => 'Update Address',
