@@ -20,6 +20,7 @@ return [
     'phone' => '電話番号',
     'status' => 'ステータス',
     'role' => '役割',
+    'username' => 'ユーザー名',
     'created_at' => '作成日時',
 
     // Table headers

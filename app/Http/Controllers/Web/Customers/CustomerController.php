@@ -93,9 +93,9 @@ class CustomerController extends Controller
             $data['country_id'] = null;
         }
 
-        // Username should be updated only if it is provided.
-        if (! data_get($data, 'username')) {
-            $data['username'] = null;
+        // Username should be included in the data if provided
+        if ($request->has('username')) {
+            $data['username'] = $request->username;
         }
 
         // Set created_by to current user's ID
@@ -152,9 +152,9 @@ class CustomerController extends Controller
             $data['country_id'] = null;
         }
 
-        // Username should be updated only if it is provided.
-        if (! data_get($data, 'username')) {
-            $data['username'] = null;
+        // Username should be included in the data if provided
+        if ($request->has('username')) {
+            $data['username'] = $request->username;
         }
 
         // If password is provided, hash it

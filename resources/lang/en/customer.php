@@ -19,6 +19,7 @@ return [
     'phone' => 'Phone',
     'status' => 'Status',
     'role' => 'Role',
+    'username' => 'Username',
 
     // Table headers
     'name' => 'Name',

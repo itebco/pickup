@@ -36,6 +36,12 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="username">@lang('customer.username')</label>
+                            <input type="text" name="username" value="{{ old('username', $customer->username) }}" id="username"
+                                   class="form-control">
+                        </div>
+
+                        <div class="form-group">
                             <label for="email">@lang('customer.email')</label>
                             <input type="email" name="email" value="{{ old('email', $customer->email) }}" id="email"
                                    class="form-control" required>

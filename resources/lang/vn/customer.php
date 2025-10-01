@@ -20,6 +20,7 @@ return [
     'phone' => 'Điện thoại',
     'status' => 'Trạng thái',
     'role' => 'Vai trò',
+    'username' => 'Tên đăng nhập',
     'created_at' => 'Ngày tạo',
 
     // Table headers
