@@ -19,6 +19,7 @@ class CommonHelper
 
         // Get the last package code for today
         $lastPackage = Package::where('package_code', 'LIKE', $dateCode . '%')
+            ->withTrashed() // Include trashed packages to avoid conflicts with previously deleted codes
             ->orderBy(DB::raw('CAST(SUBSTRING(package_code, 8) AS UNSIGNED)'), 'DESC')
             ->first();
 
