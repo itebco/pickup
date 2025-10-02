@@ -11,6 +11,7 @@ class UpdateDetailsRequest extends Request
         return [
             'birthday' => 'nullable|date',
             'role_id' => 'required|exists:roles,id',
+            'customer_code' => 'nullable|string|max:255',
         ];
     }
 }

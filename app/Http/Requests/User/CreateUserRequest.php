@@ -15,6 +15,7 @@ class CreateUserRequest extends Request
             'birthday' => 'nullable|date',
             'role_id' => 'required|exists:roles,id',
             'verified' => 'boolean',
+            'customer_code' => 'nullable|string|max:255',
         ];
 
         if ($this->get('country_id')) {

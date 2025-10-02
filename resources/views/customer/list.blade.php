@@ -68,6 +68,7 @@
                     <th></th>
                     <th class="min-width-80">@lang('customer.name')</th>
                     <th class="min-width-100">@lang('customer.email')</th>
+                    <th class="min-width-100">@lang('customer.customer_code')</th>
                     <th class="min-width-80">@lang('customer.created')</th>
                     <th class="min-width-80">@lang('customer.status')</th>
                     <th class="text-center min-width-150">@lang('app.action')</th>

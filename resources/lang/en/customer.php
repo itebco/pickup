@@ -20,6 +20,7 @@ return [
     'status' => 'Status',
     'role' => 'Role',
     'username' => 'Username',
+    'customer_code' => 'Customer Code',
 
     // Table headers
     'name' => 'Name',

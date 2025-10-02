@@ -15,6 +15,7 @@ class CreateCustomerRequest extends Request
             'birthday' => 'nullable|date',
             'role_id' => 'required|exists:roles,id',
             'verified' => 'boolean',
+            'customer_code' => 'nullable|string|max:255',
         ];
 
         if ($this->get('country_id')) {
@@ -42,6 +43,8 @@ class CreateCustomerRequest extends Request
             'role_id.exists' => __('validation.exists', ['attribute' => __('customer.role')]),
             'verified.boolean' => __('validation.boolean', ['attribute' => __('customer.verified')]),
             'country_id.exists' => __('validation.exists', ['attribute' => __('customer.country')]),
+            'customer_code.string' => __('validation.string', ['attribute' => __('customer.customer_code')]),
+            'customer_code.max' => __('validation.max.string', ['attribute' => __('customer.customer_code'), 'max' => 255]),
         ];
     }
 }

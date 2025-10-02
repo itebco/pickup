@@ -21,6 +21,7 @@ return [
     'status' => 'Trạng thái',
     'role' => 'Vai trò',
     'username' => 'Tên đăng nhập',
+    'customer_code' => 'Mã khách hàng',
     'created_at' => 'Ngày tạo',
 
     // Table headers

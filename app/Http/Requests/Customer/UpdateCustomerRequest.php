@@ -21,6 +21,7 @@ class UpdateCustomerRequest extends Request
             'role_id' => 'exists:roles,id',
             'country_id' => 'exists:countries,id',
             'status' => Rule::in(array_keys(UserStatus::lists())),
+            'customer_code' => 'nullable|string|max:255',
         ];
     }
 
@@ -39,6 +40,8 @@ class UpdateCustomerRequest extends Request
             'role_id.exists' => __('validation.exists', ['attribute' => __('customer.role')]),
             'country_id.exists' => __('validation.exists', ['attribute' => __('customer.country')]),
             'status.in' => __('validation.in', ['attribute' => __('customer.status')]),
+            'customer_code.string' => __('validation.string', ['attribute' => __('customer.customer_code')]),
+            'customer_code.max' => __('validation.max.string', ['attribute' => __('customer.customer_code'), 'max' => 255]),
         ];
     }
 }

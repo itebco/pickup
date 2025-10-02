@@ -21,6 +21,11 @@
             </select>
         </div>
         <div class="form-group">
+            <label for="customer_code">@lang('Customer Code')</label>
+            <input type="text" class="form-control input-solid" id="customer_code"
+                   name="customer_code" placeholder="@lang('Customer Code')" value="{{ $edit ? $user->customer_code : '' }}">
+        </div>
+        <div class="form-group">
             <label for="first_name">@lang('First Name')</label>
             <input type="text" class="form-control input-solid" id="first_name"
                    name="first_name" placeholder="@lang('First Name')" value="{{ $edit ? $user->first_name : '' }}">

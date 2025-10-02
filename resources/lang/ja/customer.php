@@ -21,6 +21,7 @@ return [
     'status' => 'ステータス',
     'role' => '役割',
     'username' => 'ユーザー名',
+    'customer_code' => '顧客コード',
     'created_at' => '作成日時',
 
     // Table headers

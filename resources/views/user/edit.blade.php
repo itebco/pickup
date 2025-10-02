@@ -92,7 +92,7 @@
                         <form action="{{ route('users.update.details', $user) }}" method="POST" id="details-form">
                             @csrf
                             @method('PUT')
-                            @include('user.partials.details', ['profile' => false])
+                            @include('user.partials.details', ['edit' => true, 'profile' => false])
                         </form>
                     </div>
 

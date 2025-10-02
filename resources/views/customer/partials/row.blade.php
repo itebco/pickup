@@ -14,6 +14,7 @@
         </a>
     </td>
     <td class="align-middle">{{ $customer->email ?: __('N/A') }}</td>
+    <td class="align-middle">{{ $customer->customer_code ?: __('N/A') }}</td>
     <td class="align-middle">{{ $customer->created_at->format(config('app.date_format')) }}</td>
     <td class="align-middle">
         <span class="badge badge-lg badge-{{ $customer->present()->labelClass }}">

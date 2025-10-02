@@ -67,6 +67,12 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="customer_code">@lang('customer.customer_code')</label>
+                            <input type="text" name="customer_code" value="{{ old('customer_code') }}" id="customer_code"
+                                   class="form-control" maxlength="255">
+                        </div>
+
+                        <div class="form-group">
                             <label for="status">@lang('customer.status')</label>
                             <select name="status" id="status" class="form-control" required>
                                 @foreach(\App\Support\Enum\UserStatus::lists() as $value => $label)
