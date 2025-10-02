@@ -16,6 +16,7 @@ return [
     'package_deleted_successfully' => 'Package deleted successfully',
     'unauthorized_to_edit_package' => 'Unauthorized to edit this package',
     'unauthorized_to_delete_package' => 'Unauthorized to delete this package',
+    'unauthorized_to_export_packages' => 'Unauthorized to export packages',
     'package_cannot_be_edited' => 'Package cannot be edited because it has been completed or the pickup date has passed.',
     'package_cannot_be_deleted' => 'Package cannot be deleted because it has been completed or the pickup date has passed.',
     'no_packages_found' => 'No packages found',
@@ -28,6 +29,7 @@ return [
     'delivery' => 'Delivery',
     'pending' => 'Pending',
     'done' => 'Done',
+    'export_csv' => 'Export CSV',
     'labels' => [
         'customer_id' => 'Customer',
         'address_id' => 'Address',

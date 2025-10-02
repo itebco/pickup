@@ -143,6 +143,9 @@ Route::group(['middleware' => ['auth', 'verified', 'approved', 'password-change'
     Route::resource('packages', PackageController::class)
         ->middleware('permission:packages.manage');
 
+    Route::post('packages/export-selected', [PackageController::class, 'exportSelectedPackages'])->name('packages.export')
+        ->middleware('permission:packages.manage');
+
     Route::group(['prefix' => 'users/{user}', 'middleware' => 'permission:users.manage'], function () {
         Route::put('update/approve', [UsersDetailsController::class, 'approve'])
             ->name('users.update.approve');

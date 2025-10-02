@@ -16,6 +16,7 @@ return [
     'package_deleted_successfully' => 'パッケージが正常に削除されました',
     'unauthorized_to_edit_package' => 'このパッケージを編集する権限がありません',
     'unauthorized_to_delete_package' => 'このパッケージを削除する権限がありません',
+    'unauthorized_to_export_packages' => 'パッケージをエクスポートする権限がありません',
     'package_cannot_be_edited' => 'パッケージが完了したか、ピックアップ日が過ぎたため、パッケージを編集できません。',
     'package_cannot_be_deleted' => 'パッケージが完了したか、ピックアップ日が過ぎたため、パッケージを削除できません。',
     'no_packages_found' => 'パッケージが見つかりません',
@@ -35,6 +36,7 @@ return [
     'delivery' => '配達',
     'pending' => '保留中',
     'done' => '完了',
+    'export_csv' => 'CSVをエクスポート',
     'labels' => [
         'customer_id' => '顧客',
         'address_id' => '住所',

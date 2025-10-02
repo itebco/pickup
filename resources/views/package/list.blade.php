@@ -9,6 +9,21 @@
     </li>
 @stop
 
+@section('styles')
+    <style>
+        input[type=checkbox] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+
+        input[type=checkbox]:checked {
+            accent-color: #495057;
+        }
+    </style>
+@endsection
+
 @section('content')
 
 @include('partials.messages')
@@ -42,6 +57,12 @@
                 </div>
 
                 <div class="col-md-6">
+                    @if(auth()->user()->role_id == \App\Models\Role::ADMIN_ROLE_ID)
+                        <button type="button" id="export-selected-btn" class="btn btn-primary btn-rounded float-right ml-2">
+                            <i class="fas fa-download mr-2"></i>
+                            @lang('package.export_csv')
+                        </button>
+                    @endif
                     <a href="{{ route('packages.create') }}" class="btn btn-primary btn-rounded float-right">
                         <i class="fas fa-plus mr-2"></i>
                         @lang('package.add_package')
@@ -110,9 +131,9 @@
             <table class="table table-borderless table-striped">
                 <thead>
                 <tr>
-                    <th></th>
+                    <th class="align-middle"><input type="checkbox" id="select-all"></th>
                     <th class="min-width-100">@lang('package.labels.package_code')</th>
-                    <th class="min-width-100">@lang('package.labels.owner_name')</th>
+                    <th class="min-width-10">@lang('package.labels.owner_name')</th>
                     <th class="min-width-100">@lang('package.labels.pickup_date')</th>
                     <th class="min-width-100">@lang('package.labels.pickup_time')</th>
                     <th class="min-width-80">@lang('package.labels.quantity')</th>
@@ -126,7 +147,7 @@
                     @if (count($packages))
                         @foreach ($packages as $package)
                             <tr>
-                                <td></td>
+                                <td class="align-middle"><input type="checkbox" class="package-checkbox" name="package_ids[]" value="{{ $package->id }}"></td>
                                 <td>{{ $package->package_code }}</td>
                                 <td>{{ $package->address->owner_name ?? '' }}</td>
                                 <td>{{ \Carbon\Carbon::parse($package->pickup_date)->format('Y-m-d') }}</td>
@@ -197,6 +218,59 @@
         // Also submit when pickup date fields change
         $("#pickup_date_from, #pickup_date_to").change(function () {
             $("#packages-form").submit();
+        });
+
+        // Checkbox functionality
+        $("#select-all").click(function () {
+            $(".package-checkbox").prop("checked", this.checked);
+        });
+
+        $(".package-checkbox").click(function () {
+            if (!this.checked) {
+                $("#select-all").prop("checked", false);
+            }
+            // Check if all checkboxes are checked to update select-all
+            if ($(".package-checkbox:checked").length == $(".package-checkbox").length) {
+                $("#select-all").prop("checked", true);
+            }
+        });
+
+        // Handle export selected button click
+        $("#export-selected-btn").click(function() {
+            const selectedPackageIds = [];
+            $(".package-checkbox:checked").each(function() {
+                selectedPackageIds.push($(this).val());
+            });
+
+            if (selectedPackageIds.length > 0) {
+                // Create a temporary form to submit the selected package IDs via POST
+                const form = $('<form>', {
+                    'method': 'POST',
+                    'action': '{{ route("packages.export") }}',
+                    'style': 'display: none;'
+                });
+
+                // Add CSRF token
+                form.append($('<input>', {
+                    'type': 'hidden',
+                    'name': '_token',
+                    'value': $('meta[name="csrf-token"]').attr('content')
+                }));
+
+                // Add package IDs
+                selectedPackageIds.forEach(function(id) {
+                    form.append($('<input>', {
+                        'type': 'hidden',
+                        'name': 'package_ids[]',
+                        'value': id
+                    }));
+                });
+
+                // Append form to body and submit
+                $('body').append(form);
+                form.submit();
+                form.remove();
+            }
         });
     </script>
 @stop
