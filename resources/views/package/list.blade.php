@@ -21,6 +21,16 @@
         input[type=checkbox]:checked {
             accent-color: #495057;
         }
+
+        .fixed-buttons-container {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 25;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
     </style>
 @endsection
 
@@ -30,22 +40,37 @@
 
 <div class="card">
     <div class="card-body">
-
         <form action="" method="GET" id="packages-form" class="pb-2 mb-3 border-bottom-light">
-            <div class="row my-3 flex-md-row flex-column-reverse">
-                <div class="col-md-6 mt-md-0 mt-2">
-                    <div class="input-group custom-search-form">
-                        <input type="text"
-                               class="form-control input-solid"
-                               name="search"
-                               value="{{ Request::get('search') }}"
-                               placeholder="@lang('Search for packages...')">
+            <!-- Fixed buttons container at bottom right -->
+            <div class="fixed-buttons-container">
+                @if(auth()->user()->role_id == \App\Models\Role::ADMIN_ROLE_ID)
+                    <button type="button" id="export-selected-btn" class="btn btn-primary btn-rounded">
+                        <i class="fas fa-download mr-2"></i>
+                        @lang('package.export_csv')
+                    </button>
+                @endif
+                <a href="{{ route('packages.create') }}" class="btn btn-primary btn-rounded">
+                    <i class="fas fa-plus mr-2"></i>
+                    @lang('package.add_package')
+                </a>
+            </div>
 
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="search_inline">@lang('package.labels.free_search')</label>
+                        <div class="input-group custom-search-form">
+                            <input type="text"
+                                   class="form-control input-solid"
+                                   name="search"
+                                   id="search_inline"
+                                   value="{{ Request::get('search') }}"
+                                   placeholder="@lang('Search for packages...')">
                             <span class="input-group-append">
                                 @if (Request::has('search') && Request::get('search') != '')
                                     <a href="{{ route('packages.index') }}"
-                                           class="btn btn-light d-flex align-items-center text-muted"
-                                           role="button">
+                                            class="btn btn-light d-flex align-items-center text-muted"
+                                            role="button">
                                         <i class="fas fa-times"></i>
                                     </a>
                                 @endif
@@ -53,25 +78,11 @@
                                     <i class="fas fa-search text-muted"></i>
                                 </button>
                             </span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    @if(auth()->user()->role_id == \App\Models\Role::ADMIN_ROLE_ID)
-                        <button type="button" id="export-selected-btn" class="btn btn-primary btn-rounded float-right ml-2">
-                            <i class="fas fa-download mr-2"></i>
-                            @lang('package.export_csv')
-                        </button>
-                    @endif
-                    <a href="{{ route('packages.create') }}" class="btn btn-primary btn-rounded float-right">
-                        <i class="fas fa-plus mr-2"></i>
-                        @lang('package.add_package')
-                    </a>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="form-group">
                         <label for="pickup_date_from">@lang('package.labels.pickup_date_from')</label>
                         <input type="date"
@@ -82,7 +93,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="form-group">
                         <label for="pickup_date_to">@lang('package.labels.pickup_date_to')</label>
                         <input type="date"
@@ -93,7 +104,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="form-group">
                         <label for="status">@lang('package.labels.status')</label>
                         <select name="status" id="status" class="form-control input-solid">
@@ -107,23 +118,6 @@
                         </select>
                     </div>
                 </div>
-
-               <div class="col-md-3">
-                   <div class="form-group pt-4">
-                       {{-- <button class="btn btn-primary btn-rounded float-right" type="submit">
-                           <i class="fas fa-filter mr-2"></i>
-                           @lang('app.filter')
-                       </button> --}}
-                       @if(Request::has('pickup_date_from') || Request::has('pickup_date_to') || Request::has('status'))
-                           <a href="{{ route('packages.index') }}"
-                              class="btn btn-light btn-rounded float-right mr-2"
-                              role="button">
-                               <i class="fas fa-times mr-2"></i>
-                               @lang('app.reset')
-                           </a>
-                       @endif
-                   </div>
-               </div>
            </div>
        </form>
 
@@ -211,12 +205,8 @@
 
 @section('scripts')
     <script>
-        $("#status").change(function () {
-            $("#packages-form").submit();
-        });
-
-        // Also submit when pickup date fields change
-        $("#pickup_date_from, #pickup_date_to").change(function () {
+        // Search when fields change
+        $("#status, #pickup_date_from, #pickup_date_to").change(function () {
             $("#packages-form").submit();
         });
 

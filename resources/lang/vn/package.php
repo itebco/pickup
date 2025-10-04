@@ -25,6 +25,7 @@ return [
     'yes_delete_it' => 'Có, xóa nó',
     'back' => 'Quay lại',
     'update_package' => 'Cập nhật gói hàng',
+    'update_status' => 'Cập nhật trạng thái',
     'cancel' => 'Hủy',
     'created_at' => 'Ngày tạo',
     'view' => 'Xem',
@@ -50,6 +51,7 @@ return [
         'remark' => 'Ghi chú',
         'pickup_date_from' => 'Ngày lấy hàng từ',
         'pickup_date_to' => 'Ngày lấy hàng đến',
+        'free_search' => 'Tìm kiếm tự do',
     ],
     'validation' => [
         'customer_id_required' => 'Khách hàng là bắt buộc',

@@ -22,6 +22,7 @@ return [
     'no_packages_found' => 'No packages found',
     'are_you_sure_delete_package' => 'Are you sure you want to delete this package?',
     'update_package' => 'Update Package',
+    'update_status' => 'Update Status',
     'package' => 'Package',
     'method_label' => 'Method',
     'status_label' => 'Status',
@@ -43,6 +44,7 @@ return [
         'remark' => 'Remark',
         'pickup_date_from' => 'Pickup Date From',
         'pickup_date_to' => 'Pickup Date To',
+        'free_search' => 'Free Search',
     ],
     'validation' => [
         'customer_id_required' => 'Customer is required',

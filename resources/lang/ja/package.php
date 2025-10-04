@@ -25,6 +25,7 @@ return [
     'yes_delete_it' => 'はい、削除します',
     'back' => '戻る',
     'update_package' => 'パッケージを更新',
+    'update_status' => 'ステータスを更新',
     'cancel' => 'キャンセル',
     'created_at' => '作成日時',
     'view' => '表示',
@@ -50,6 +51,7 @@ return [
         'remark' => '備考',
         'pickup_date_from' => 'ピックアップ日（開始）',
         'pickup_date_to' => 'ピックアップ日（終了）',
+        'free_search' => 'フリー検索',
     ],
     'validation' => [
         'customer_id_required' => '顧客は必須です',
