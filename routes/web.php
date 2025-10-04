@@ -140,10 +140,12 @@ Route::group(['middleware' => ['auth', 'verified', 'approved', 'password-change'
     /**
      * Package Management
      */
-    Route::resource('packages', PackageController::class)
+    Route::resource('packages', PackageController::class)->except('show')->middleware('permission:packages.manage');
+
+    Route::post('packages/export-csv', [PackageController::class, 'exportSelectedPackages'])->name('packages.export-csv')
         ->middleware('permission:packages.manage');
 
-    Route::post('packages/export-selected', [PackageController::class, 'exportSelectedPackages'])->name('packages.export')
+    Route::get('packages/preview', [PackageController::class, 'showSelectedPackages'])->name('packages.show.selected')
         ->middleware('permission:packages.manage');
 
     Route::group(['prefix' => 'users/{user}', 'middleware' => 'permission:users.manage'], function () {

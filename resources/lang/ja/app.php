@@ -52,6 +52,8 @@ return [
     'all' => 'すべて',
     'filter' => 'フィルター',
     'reset' => 'リセット',
+    'preview' => 'プレビュー',
+    'export_csv' => 'CSV出力',
 
     // Common messages
     'no_records_found' => 'レコードが見つかりません。',

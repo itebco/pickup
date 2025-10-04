@@ -51,6 +51,8 @@ return [
     'all' => 'All',
     'filter' => 'Filter',
     'reset' => 'Reset',
+    'preview' => 'Preview',
+    'export_csv' => 'Export CSV',
 
     // Common messages
     'no_records_found' => 'No records found.',

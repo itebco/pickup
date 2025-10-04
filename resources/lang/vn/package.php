@@ -2,6 +2,7 @@
 
 return [
     'packages' => 'Gói hàng',
+    'selected_packages' => 'Các gói hàng đã chọn',
     'add_package' => 'Thêm gói hàng',
     'edit_package' => 'Sửa gói hàng',
     'view_package' => 'Xem gói hàng',
@@ -17,6 +18,8 @@ return [
     'unauthorized_to_edit_package' => 'Không có quyền chỉnh sửa gói hàng này',
     'unauthorized_to_delete_package' => 'Không có quyền xóa gói hàng này',
     'unauthorized_to_export_packages' => 'Không có quyền xuất gói hàng',
+    'no_packages_selected_for_export' => 'Không có gói hàng nào được chọn để xuất.',
+    'no_packages_selected_for_display' => 'Không có gói hàng nào được chọn để hiển thị.',
     'package_cannot_be_edited' => 'Không thể chỉnh sửa package vì package đã hoàn thành hoặc ngày lấy hàng đã qua.',
     'package_cannot_be_deleted' => 'Không thể xóa package vì package đã hoàn thành hoặc ngày lấy hàng đã qua.',
     'no_packages_found' => 'Không tìm thấy gói hàng nào',
@@ -37,7 +40,9 @@ return [
     'delivery' => 'Giao hàng',
     'pending' => 'Chờ xử lý',
     'done' => 'Hoàn thành',
-    'export_csv' => 'Xuất CSV',
+    'export_csv' => 'Xuất CSV đã chọn',
+    'export_all_csv' => 'Xuất tất cả CSV',
+    'download_csv' => 'Tải CSV',
     'labels' => [
         'customer_id' => 'Khách hàng',
         'address_id' => 'Địa chỉ',

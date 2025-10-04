@@ -272,7 +272,8 @@ class PackageController extends Controller
             abort(403, __('package.unauthorized_to_export_packages'));
         }
 
-        $packageIds = $request->input('package_ids', []);
+        $packageIds = $request->input('pids');
+        $packageIds = explode(',', base64_decode($packageIds));
 
         // Validate that package_ids is an array
         if (!is_array($packageIds) || empty($packageIds)) {
@@ -304,42 +305,42 @@ class PackageController extends Controller
                 $pickUpTimeForm = explode('-', $package->pickup_time)[0];
                 $pickUpTimeTo = explode('-', $package->pickup_time)[1] ?? '';
                 fputcsv($file, [
-                    '1', // 伝票区分 - Voucher type
-                    '1010', // 依頼店（精算店）コード - Store code
-                    '18228216005', // 荷送人コード（顧客)枝番込 - Sender code
-                    $package->quantity, // 総個数 - Total quantity
-                    '', // 代引金 - Cash on delivery amount
-                    '', // 代引決済区分 - COD payment type
-                    '', // 保険金 - Insurance amount
-                    '', // 書込み金 - Writing fee
-                    '', // 立替金 - Advance payment
-                    '1751000', // 依頼主コード　枝番込 - Requestor code
-                    '0', // 便種 - Shipping type
-                    $package->pickup_date, // 集荷予定日付 - Pickup date
-                    $pickUpTimeForm, // 集荷予定時刻FROM - Pickup time FROM
-                    $pickUpTimeTo, // 集荷予定時刻TO - Pickup time TO
-                    $package->address->post_code, // 荷送人郵便番号 - Sender postal code
-                    $package->address->tel, // 荷送人電話番号 - Sender phone
-                    $package->address->state . ' ' . $package->address->city . ' ' . $package->address->ward . ' ' . $package->address->room_no, // 荷送人住所１～３ - Sender address
-                    $package->address->owner_name, // 荷送人名称１～３ - Sender name
-                    '2860117', // 荷受人郵便番号 - Recipient postal code
-                    '344006368', // 荷受人電話番号 - Recipient phone
-                    '', // 荷受人住所１～３ - Recipient address
-                    '', // 荷受人名称１～３ - Recipient name
-                    '', // 注文主郵便番号 - Orderer postal code
-                    '', // 注文主電話番号 - Orderer phone
-                    '', // 注文主住所１～３ - Orderer address
-                    '', // 注文主名称１～３ - Orderer name
-                    '', // 送り状編集１～３ - Waybill edit
-                    '', // 配達指定日付 - Delivery date
-                    '', // 配達指定時刻 - Delivery time
-                    '', // 営止着店（精算店）コード - Delivery store code
-                    $package->package_code, // 顧客管理番号 - Customer management number
-                    $package->remark, // 記事欄1 - Note 1
-                    '', // 記事欄2 - Note 2
-                    '', // 記事欄3 - Note 3
-                    '', // 記事欄4 - Note 4
-                    '' // 記事欄5 - Note 5
+                    '1', // A: 伝票区分 - Voucher type
+                    '1010', // B: 依頼店（精算店）コード - Store code
+                    '18228216005', // C: 荷送人コード（顧客)枝番込 - Sender code
+                    $package->quantity, // D: 総個数 - Total quantity
+                    '', // E: 代引金 - Cash on delivery amount
+                    '', // F: 代引決済区分 - COD payment type
+                    '', // G: 保険金 - Insurance amount
+                    '', // H: 書込み金 - Writing fee
+                    '', // I: 立替金 - Advance payment
+                    '1751000', // J: 依頼主コード　枝番込 - Requestor code
+                    '0', // K: 便種 - Shipping type
+                    $package->pickup_date, // L: 集荷予定日付 - Pickup date
+                    $pickUpTimeForm, // M: 集荷予定時刻FROM - Pickup time FROM
+                    $pickUpTimeTo, // N: 集荷予定時刻TO - Pickup time TO
+                    $package->address->post_code, // O: 荷送人郵便番号 - Sender postal code
+                    $package->address->tel, // P: 荷送人電話番号 - Sender phone
+                    $package->address->state . ' ' . $package->address->city . ' ' . $package->address->ward . ' ' . $package->address->room_no, // Q: 荷送人住所１～３ - Sender address
+                    $package->address->owner_name, // R: 荷送人名称１～３ - Sender name
+                    '2860117', // S: 荷受人郵便番号 - Recipient postal code
+                    '344006368', // T: 荷受人電話番号 - Recipient phone
+                    '', // U: 荷受人住所１～３ - Recipient address
+                    '', // V: 荷受人名称１～３ - Recipient name
+                    '', // W: 注文主郵便番号 - Orderer postal code
+                    '', // X: 注文主電話番号 - Orderer phone
+                    '', // Y: 注文主住所１～３ - Orderer address
+                    '', // Z: 注文主名称１～３ - Orderer name
+                    '', // AA: 送り状編集１～３ - Waybill edit
+                    '', // AB: 配達指定日付 - Delivery date
+                    '', // AC: 配達指定時刻 - Delivery time
+                    '', // AD: 営止着店（精算店）コード - Delivery store code
+                    $package->package_code, // AE: 顧客管理番号 - Customer management number
+                    $package->remark, // AF: 記事欄1 - Note 1
+                    '' => config('setting.prefecture_mapping')[$package->address->state] ?? '', // AG: 記事欄2 - Note 2
+                    '', // AH: 記事欄3 - Note 3
+                    '', // AI: 記事欄4 - Note 4
+                    '', // AJ: 記事欄5 - Note 5
                 ]);
             }
 
@@ -350,5 +351,31 @@ class PackageController extends Controller
             'Content-Type' => 'text/csv; charset=utf-8',
             'Content-Disposition' => 'attachment; filename="packages_export_' . date('Y-m-d_H-i-s') . '.csv"',
         ]);
+    }
+
+    public function showSelectedPackages(Request $request)
+    {
+        $currentUser = Auth::user();
+
+        // Check if user is admin (role_id = 1)
+        if ($currentUser->role_id != Role::ADMIN_ROLE_ID) {
+            abort(403, __('package.unauthorized_to_view_packages'));
+        }
+
+        $packageIds = $request->input('pids');
+        $packageIds = explode(',', base64_decode($packageIds));
+
+        // Validate that package_ids is an array
+        if (!is_array($packageIds) || empty($packageIds)) {
+            return redirect()->back()->with('error', __('package.no_packages_selected_for_view'));
+        }
+
+        // Get only the packages with the specified IDs
+        $packages = Package::with(['address', 'creator'])
+                            ->whereIn('id', $packageIds)
+                            ->orderBy('id', 'desc')
+                            ->get();
+
+        return view('package.preview', compact('packages'));
     }
 }

@@ -2,6 +2,7 @@
 
 return [
     'packages' => 'パッケージ',
+    'selected_packages' => '選択されたパッケージ',
     'add_package' => 'パッケージを追加',
     'edit_package' => 'パッケージを編集',
     'view_package' => 'パッケージを表示',
@@ -17,6 +18,8 @@ return [
     'unauthorized_to_edit_package' => 'このパッケージを編集する権限がありません',
     'unauthorized_to_delete_package' => 'このパッケージを削除する権限がありません',
     'unauthorized_to_export_packages' => 'パッケージをエクスポートする権限がありません',
+    'no_packages_selected_for_export' => 'エクスポートするパッケージが選択されていません。',
+    'no_packages_selected_for_display' => '表示するパッケージが選択されていません。',
     'package_cannot_be_edited' => 'パッケージが完了したか、ピックアップ日が過ぎたため、パッケージを編集できません。',
     'package_cannot_be_deleted' => 'パッケージが完了したか、ピックアップ日が過ぎたため、パッケージを削除できません。',
     'no_packages_found' => 'パッケージが見つかりません',
@@ -37,7 +40,9 @@ return [
     'delivery' => '配達',
     'pending' => '保留中',
     'done' => '完了',
-    'export_csv' => 'CSVをエクスポート',
+    'export_csv' => '選択したCSVをエクスポート',
+    'export_all_csv' => 'すべてのCSVをエクスポート',
+    'download_csv' => 'CSVをダウンロード',
     'labels' => [
         'customer_id' => '顧客',
         'address_id' => '住所',

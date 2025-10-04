@@ -45,8 +45,8 @@
             <div class="fixed-buttons-container">
                 @if(auth()->user()->role_id == \App\Models\Role::ADMIN_ROLE_ID)
                     <button type="button" id="export-selected-btn" class="btn btn-primary btn-rounded">
-                        <i class="fas fa-download mr-2"></i>
-                        @lang('package.export_csv')
+                        <i class="fas fa-eye mr-2"></i>
+                        @lang('app.preview')
                     </button>
                 @endif
                 <a href="{{ route('packages.create') }}" class="btn btn-primary btn-rounded">
@@ -233,33 +233,10 @@
             });
 
             if (selectedPackageIds.length > 0) {
-                // Create a temporary form to submit the selected package IDs via POST
-                const form = $('<form>', {
-                    'method': 'POST',
-                    'action': '{{ route("packages.export") }}',
-                    'style': 'display: none;'
-                });
-
-                // Add CSRF token
-                form.append($('<input>', {
-                    'type': 'hidden',
-                    'name': '_token',
-                    'value': $('meta[name="csrf-token"]').attr('content')
-                }));
-
-                // Add package IDs
-                selectedPackageIds.forEach(function(id) {
-                    form.append($('<input>', {
-                        'type': 'hidden',
-                        'name': 'package_ids[]',
-                        'value': id
-                    }));
-                });
-
-                // Append form to body and submit
-                $('body').append(form);
-                form.submit();
-                form.remove();
+                const url = '{{ route("packages.show.selected") }}';
+                window.location.href = url + '?pids=' + btoa(selectedPackageIds.join(','));
+            } else {
+                alert('@lang('package.no_packages_selected_for_display')');
             }
         });
     </script>

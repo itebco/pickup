@@ -51,6 +51,8 @@ return [
     'all' => 'Tất cả',
     'filter' => 'Lọc',
     'reset' => 'Đặt lại',
+    'preview' => 'Xem trước',
+    'export_csv' => 'Xuất CSV',
 
     // Common messages
     'no_records_found' => 'Không tìm thấy bản ghi nào.',

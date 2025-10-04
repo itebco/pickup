@@ -2,6 +2,7 @@
 
 return [
     'packages' => 'Packages',
+    'selected_packages' => 'Selected Packages',
     'add_package' => 'Add Package',
     'edit_package' => 'Edit Package',
     'view_package' => 'View Package',
@@ -30,7 +31,11 @@ return [
     'delivery' => 'Delivery',
     'pending' => 'Pending',
     'done' => 'Done',
-    'export_csv' => 'Export CSV',
+    'export_csv' => 'Export Selected CSV',
+    'export_all_csv' => 'Export All CSV',
+    'download_csv' => 'Download CSV',
+    'no_packages_selected_for_export' => 'No packages selected for export.',
+    'no_packages_selected_for_display' => 'No packages selected for display.',
     'labels' => [
         'customer_id' => 'Customer',
         'address_id' => 'Address',
